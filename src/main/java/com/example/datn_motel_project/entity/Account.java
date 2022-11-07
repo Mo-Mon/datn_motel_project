@@ -5,31 +5,38 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 public class Account extends BaseEntity {
-    private String accountName;
+    private String email;
     @JsonIgnore
     private String password;
     private String phone;
     private String fullName;
+    private String address;
+    private Date dateOfBirth;
     private String idCard;
     private String pathIdCard;
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", //Tạo ra một join Table tên là "address_person"
-            joinColumns = @JoinColumn(name = "user_id"),  // TRong đó, khóa ngoại chính là address_id trỏ tới class hiện tại (Address)
-            inverseJoinColumns = @JoinColumn(name = "role_id") //Khóa ngoại thứ 2 trỏ tới thuộc tính ở dưới (Person)
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @JsonIgnore
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private Set<Motel> motels = new LinkedHashSet<>();
 
-//    private List<Motel> motels = new ArrayList<>();
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private Set<AccountTransactionDetail> accountTransactionDetails = new LinkedHashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "gender_id")
+    private Gender gender;
+
 }

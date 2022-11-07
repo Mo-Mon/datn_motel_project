@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Chỉ những ai đăng nhập mới truy cập được trang này!</h1>
-<h1 th:text="${account.accountName}"></h1>
+<h1 th:text="${account.email}"></h1>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>
 </form>

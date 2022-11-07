@@ -1,20 +1,16 @@
 package com.example.datn_motel_project.security;
 
 import com.example.datn_motel_project.entity.Account;
-import com.example.datn_motel_project.entity.Role;
-import com.example.datn_motel_project.repository.AccountRepository;
 import com.example.datn_motel_project.repository.RoleRepository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +25,7 @@ public class AccountDetail implements UserDetails {
     public AccountDetail(Account account, List<GrantedAuthority> authorities){
         this.id = account.getId();
         this.password = account.getPassword();
-        this.email = account.getAccountName();
+        this.email = account.getEmail();
         this.authorities = authorities;
     }
     @Override

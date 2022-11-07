@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     private RoleRepository roleRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findAccountByAccountName(username);
+        Account account = accountRepository.findAccountByEmail(username);
         if(account == null){
             throw new UsernameNotFoundException(username);
         }

@@ -6,6 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,4 +17,7 @@ import javax.persistence.Entity;
 public class Image extends BaseEntity {
     private String path;
     private String name;
+    @ManyToOne
+    @JoinColumn(name = "motel")
+    private Motel motel;
 }
