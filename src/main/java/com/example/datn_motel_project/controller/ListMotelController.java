@@ -2,6 +2,7 @@ package com.example.datn_motel_project.controller;
 
 import com.example.datn_motel_project.Constant.listmotel.*;
 import com.example.datn_motel_project.service.LocationService;
+import com.example.datn_motel_project.service.MotelTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +16,12 @@ public class ListMotelController {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private MotelTypeService motelTypeService;
     @GetMapping("/home")
     public String goHome(HttpSession session, Model model) {
         setupView(model);
-        List<String> locations = locationService.getListLocation();
-        model.addAttribute("listLocation",locations);
+        getData(model);
         return "/listmotel";
     }
 
@@ -31,6 +33,9 @@ public class ListMotelController {
     }
 
     private void getData(Model model){
-
+        List<String> locations = locationService.getListLocation();
+        model.addAttribute("listLocation",locations);
+        List<String> motelTypes = motelTypeService.getAllNameMotelType();
+        model.addAttribute("listMotelType",motelTypes);
     }
 }
