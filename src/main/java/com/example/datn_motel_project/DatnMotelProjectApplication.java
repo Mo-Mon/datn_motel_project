@@ -1,14 +1,8 @@
 package com.example.datn_motel_project;
 
 import com.example.datn_motel_project.common.BaseLogic;
-import com.example.datn_motel_project.entity.Account;
-import com.example.datn_motel_project.entity.Gender;
-import com.example.datn_motel_project.entity.Location;
-import com.example.datn_motel_project.entity.Role;
-import com.example.datn_motel_project.repository.AccountRepository;
-import com.example.datn_motel_project.repository.GenderRepository;
-import com.example.datn_motel_project.repository.LocationRepository;
-import com.example.datn_motel_project.repository.RoleRepository;
+import com.example.datn_motel_project.entity.*;
+import com.example.datn_motel_project.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +26,9 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    MotelTypeRepository motelTypeRepository;
     @Override
     public void run(String... args) throws Exception {
 
@@ -60,7 +57,7 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        account.getRoles().add(role);
 //        accountRepository.save(account);
 //
-//        Account a = accountRepository.findAccountByEmail("sonmnt@gmail.com");
+        Account a = accountRepository.findAccountByEmail("sonmnt@gmail.com");
 //        Location l1 = new Location();
 //        l1.setName("Hà Nội");
 //        BaseLogic.setInfoAccountCreate(a,l1);
@@ -81,5 +78,22 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        l5.setName("Thái Bình");
 //        BaseLogic.setInfoAccountCreate(a,l5);
 //        locationRepository.save(l5);
+//        MotelType m1 = new MotelType();
+//        m1.setName("chung cư");
+//        BaseLogic.setInfoAccountCreate(a,m1);
+//        motelTypeRepository.save(m1);
+//        MotelType m2 = new MotelType();
+//        m2.setName("chung cư mini");
+//        BaseLogic.setInfoAccountCreate(a,m2);
+//        motelTypeRepository.save(m2);
+//        MotelType m3 = new MotelType();
+//        m3.setName("nhà trọ tập thể");
+//        BaseLogic.setInfoAccountCreate(a,m3);
+//        motelTypeRepository.save(m3);
+//        MotelType m4 = new MotelType();
+//        m4.setName("homestay");
+//        BaseLogic.setInfoAccountCreate(a,m4);
+//        motelTypeRepository.save(m4);
+
     }
 }
