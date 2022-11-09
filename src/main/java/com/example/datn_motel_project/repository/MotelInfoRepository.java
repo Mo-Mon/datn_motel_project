@@ -1,13 +1,10 @@
 package com.example.datn_motel_project.repository;
 
-import org.springframework.stereotype.Component;
+import com.example.datn_motel_project.Constant.listmotel.PriceRange;
+import com.example.datn_motel_project.entity.PageCustomer;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.List;
 
-@Component
-public class MotelInfoRepository {
-    @PersistenceContext
-    private EntityManager em;
-
+public interface MotelInfoRepository {
+    public PageCustomer getListIdMotelForSearch(String timePay,String inputTitle, String  inputProject, String location, List<PriceRange> listPriceRange, List<String> listMotelType, List<String> listAmenities , Integer size, Boolean flag, Integer offset, Integer maxResults);
 }

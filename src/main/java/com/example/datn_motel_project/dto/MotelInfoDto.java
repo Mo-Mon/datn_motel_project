@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -19,12 +21,12 @@ public class MotelInfoDto {
     private int countWC;
     private float area;
     private int count;
-    private String price;
-    private List<Image> listImage;
-    private List<String> limitGenders;
-    private List<String> listMotelType;
-    private List<Amenities> listAmenities;
+    private Set<Image> listImage;
+    private Set<String> limitGenders;
+    private Set<String> listMotelType;
+    private Set<Amenities> listAmenities;
     private String locationName;
+    private Long price;
     private String typePay;
     private String projectType;
     private String nameUserPort;

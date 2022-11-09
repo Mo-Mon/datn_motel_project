@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Set;
+
 @SpringBootApplication
 public class DatnMotelProjectApplication implements CommandLineRunner {
 
@@ -33,9 +35,18 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 
     @Autowired
     AmenitiesRepository amenitiesRepository;
+
+    @Autowired
+    MotelRepository motelRepository;
+
+    @Autowired
+    ProjectMotelRepository projectMotelRepository;
+
+    @Autowired
+    ImageRepository imageRepository;
     @Override
     public void run(String... args) throws Exception {
-
+//
 //        Account account = new Account();
 //        account.setEmail("sonmnt@gmail.com");
 //        account.setFullName("Mai Ngọc Tùng Sơn");
@@ -99,7 +110,7 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        m4.setName("homestay");
 //        BaseLogic.setInfoAccountCreate(a,m4);
 //        motelTypeRepository.save(m4);
-
+//
 //        Amenities am1 = new Amenities();
 //        am1.setName(AmenitiesInConstant.WIFI.name());
 //        BaseLogic.setInfoAccountCreate(a,am1);
@@ -107,8 +118,35 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //
 //        Gender g = genderRepository.findById(2L).get();
 //
+//
+//
 //        Location l = locationRepository.findById(5L).get();
+//        ProjectMotel projectMotel = new ProjectMotel();
+//        projectMotel.setName("nhà ở xa hội");
+//        BaseLogic.setInfoAccountCreate(a,projectMotel);
+//        projectMotelRepository.save(projectMotel);
 
 
+//        ProjectMotel projectMotel1 = projectMotelRepository.findById(15L).get();
+//        Motel motel = new Motel();
+//        BaseLogic.setInfoAccountCreate(a,motel);
+//        motel.setAccount(a);
+//        motel.setTitle("nhà trọ giá rẻ khu Chùa Láng Hà Nội");
+//        motel.setShortContent("giá rẻ nhanh tay lên bạn ơi");
+//        motel.setContent("nhà trọ này bao gồm rất nhiều tiện ích hay ho rông rãi thoài mái ");
+//        motel.setMaxPeople(2);
+//        motel.setCountBedroom(1);
+//        motel.setCountWC(1);
+//        motel.setArea(25);
+//        motel.setPrice("2500000");
+//        motel.setCount(2);
+//        motel.setProjectMotel(projectMotel1);
+//        MotelType mmm = motelTypeRepository.findById(11L).get();
+//        Set<MotelType> smt = motel.getMotelType();
+//        smt.add(motelTypeRepository.findById(11L).get());
+//        smt.add(motelTypeRepository.findById(12L).get());
+//        motel.setMotelType(smt);
+//        motel.getImages().add(imageRepository.findById(16L).get());
+//        motelRepository.save(motel);
     }
 }

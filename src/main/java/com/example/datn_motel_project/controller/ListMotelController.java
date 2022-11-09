@@ -18,6 +18,8 @@ public class ListMotelController {
 
     @Autowired
     private MotelTypeService motelTypeService;
+
+
     @GetMapping("/home")
     public String goHome(HttpSession session, Model model) {
         setupView(model);

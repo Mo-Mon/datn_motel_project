@@ -13,12 +13,15 @@ import javax.persistence.OneToOne;
 @Data
 @NoArgsConstructor
 public class MotelPayInfoDetail extends BaseEntity {
-    private String price;
-    private String deposits;
-    @OneToOne(mappedBy = "motelPayInfoDetail")
+    private Long price;
+    private Long deposits;
+    @ManyToOne
+    @JoinColumn(name = "motel_id")
     private Motel motel;
 
     @ManyToOne
     @JoinColumn(name = "time_pay_id")
     private TimePay timePay;
+
+
 }

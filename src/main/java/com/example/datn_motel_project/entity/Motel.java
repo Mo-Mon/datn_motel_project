@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
@@ -19,8 +21,8 @@ public class Motel extends BaseEntity {
     private int countWC;
     private float area;
     private int count;
-    private String price;
-    @ManyToMany
+    private int countHired;
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_limit_gender",
             joinColumns = @JoinColumn(name = "motel_id"),
             inverseJoinColumns = @JoinColumn(name = "gender_id")
@@ -31,7 +33,7 @@ public class Motel extends BaseEntity {
     private Account account;
 
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "motel")
     private Set<MotelTransaction> motelTransactions;
 
     @ManyToOne
@@ -42,24 +44,23 @@ public class Motel extends BaseEntity {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToOne
-    @JoinColumn(name = "pay_info_id")
-    private MotelPayInfoDetail motelPayInfoDetail;
+    @OneToMany(mappedBy = "motel")
+    private Set<MotelPayInfoDetail> motelPayInfoDetails = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_type_detail",
             joinColumns = @JoinColumn(name = "motel_id"),
             inverseJoinColumns = @JoinColumn(name = "type_id")
     )
-    private Set<MotelType> motelType;
+    private Set<MotelType> motelTypes = new HashSet<>();
 
     @OneToMany(mappedBy = "motel")
-    private Set<Image> images;
+    private Set<Image> images = new LinkedHashSet<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_amenities_detail",
             joinColumns = @JoinColumn(name = "motel_id"),
-            inverseJoinColumns = @JoinColumn(name = "amenties")
+            inverseJoinColumns = @JoinColumn(name = "amenties_id")
     )
     private Set<Amenities> amenities;
 }

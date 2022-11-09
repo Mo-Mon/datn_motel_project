@@ -3,6 +3,7 @@ package com.example.datn_motel_project.service.impl;
 import com.example.datn_motel_project.entity.Image;
 import com.example.datn_motel_project.repository.ImageRepository;
 import com.example.datn_motel_project.service.ImageService;
+
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -70,7 +71,7 @@ public class ImageServiceImpl implements ImageService {
                 Files.copy(inputStream, destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
             }
             Image image = new Image();
-            image.setPath("DataImagePublic"+"/"+generatedFileName);
+            image.setPath(generatedFileName);
             imageRepository.save(image);
             return generatedFileName;
         }

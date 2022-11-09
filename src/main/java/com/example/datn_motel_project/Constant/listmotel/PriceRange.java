@@ -12,9 +12,9 @@ public enum PriceRange {
     PRICE_RANGE_5(5,6000000,8500000),
     PRICE_RANGE_6(6,8500000,2147483647);
 
-    int id;
-    int min;
-    int max;
+    Integer id;
+    Integer min;
+    Integer max;
 
     PriceRange(int id, int min, int max) {
         this.id = id;
