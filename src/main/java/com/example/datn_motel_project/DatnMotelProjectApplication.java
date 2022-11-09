@@ -1,5 +1,6 @@
 package com.example.datn_motel_project;
 
+import com.example.datn_motel_project.Constant.listmotel.AmenitiesInConstant;
 import com.example.datn_motel_project.common.BaseLogic;
 import com.example.datn_motel_project.entity.*;
 import com.example.datn_motel_project.repository.*;
@@ -29,6 +30,9 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 
     @Autowired
     MotelTypeRepository motelTypeRepository;
+
+    @Autowired
+    AmenitiesRepository amenitiesRepository;
     @Override
     public void run(String... args) throws Exception {
 
@@ -55,6 +59,7 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        genderRepository.save(female);
 //        account.setGender(male);
 //        account.getRoles().add(role);
+//        BaseLogic.setInfoAccountCreate(account,account);
 //        accountRepository.save(account);
 //
         Account a = accountRepository.findAccountByEmail("sonmnt@gmail.com");
@@ -94,6 +99,16 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        m4.setName("homestay");
 //        BaseLogic.setInfoAccountCreate(a,m4);
 //        motelTypeRepository.save(m4);
+
+//        Amenities am1 = new Amenities();
+//        am1.setName(AmenitiesInConstant.WIFI.name());
+//        BaseLogic.setInfoAccountCreate(a,am1);
+//        amenitiesRepository.save(am1);
+//
+//        Gender g = genderRepository.findById(2L).get();
+//
+//        Location l = locationRepository.findById(5L).get();
+
 
     }
 }

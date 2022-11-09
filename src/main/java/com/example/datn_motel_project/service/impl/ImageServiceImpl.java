@@ -1,7 +1,10 @@
 package com.example.datn_motel_project.service.impl;
 
+import com.example.datn_motel_project.entity.Image;
+import com.example.datn_motel_project.repository.ImageRepository;
 import com.example.datn_motel_project.service.ImageService;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ import java.util.stream.Stream;
 
 @Service
 public class ImageServiceImpl implements ImageService {
+    @Autowired
+    private ImageRepository imageRepository;
     private final Path storageFolder = Paths.get("DataImagePublic");
     public ImageServiceImpl() {
         try {
@@ -64,6 +69,9 @@ public class ImageServiceImpl implements ImageService {
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
             }
+            Image image = new Image();
+            image.setPath("DataImagePublic"+"/"+generatedFileName);
+            imageRepository.save(image);
             return generatedFileName;
         }
         catch (IOException exception) {
