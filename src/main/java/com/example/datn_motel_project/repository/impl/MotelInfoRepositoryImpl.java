@@ -13,9 +13,10 @@ import java.util.List;
 public class MotelInfoRepositoryImpl implements MotelInfoRepository {
     @PersistenceContext
     private EntityManager em;
+
     public PageCustomer<Long> getListIdMotelForSearch(String timePay,String inputTitle, String  inputProject, String location, List<PriceRange> listPriceRange, List<String> listMotelType, List<String> listAmenities , Integer size, Boolean flag, Integer offset, Integer maxResults){
         String query = "select distinct m.id from motel as m left join Location as l on m.location_id = l.id  left join project_motel as pm on m.project_id = pm.id " +
-                "left join (motel_pay_info_detail as mpid inner join time_pay as tp on (mpid.time_pay_id = tp.id and tp.type_time = :timePay)) on m.id = mpid.motel_id " +
+                "inner join (motel_pay_info_detail as mpid inner join time_pay as tp on (mpid.time_pay_id = tp.id and tp.type_time = :timePay)) on m.id = mpid.motel_id " +
                 "left join (motel_limit_gender as mlg inner join gender as g on mlg.gender_id = g.id)  on m.id = mlg.motel_id   " +
                 "left join (motel_amenities_detail as mad inner join amenities as am on mad.amenties_id = am.id) on mad.motel_id = m.id " +
                 "left join (motel_type_detail as mtd inner join motel_type as mt on mtd.type_id = mt.id) on mtd.motel_id = m.id  "

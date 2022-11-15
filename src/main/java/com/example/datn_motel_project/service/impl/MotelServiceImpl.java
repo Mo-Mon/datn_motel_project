@@ -2,15 +2,13 @@ package com.example.datn_motel_project.service.impl;
 
 import com.example.datn_motel_project.Constant.listmotel.PriceRange;
 import com.example.datn_motel_project.dto.MotelInfoDto;
-import com.example.datn_motel_project.entity.Gender;
-import com.example.datn_motel_project.entity.Motel;
-import com.example.datn_motel_project.entity.MotelType;
-import com.example.datn_motel_project.entity.PageCustomer;
+import com.example.datn_motel_project.entity.*;
 import com.example.datn_motel_project.repository.MotelInfoRepository;
 import com.example.datn_motel_project.repository.MotelRepository;
 import com.example.datn_motel_project.service.MotelService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,13 +23,22 @@ public class MotelServiceImpl implements MotelService {
     public PageCustomer<MotelInfoDto> findListMotelInfo(String timePay,String inputTitle, String  inputProject, String location, List<PriceRange> listPriceRange, List<String> listMotelType, List<String> listAmenities , Integer size, Boolean flag, Integer offset, Integer maxResults){
         PageCustomer<Long> pageCustomerId = motelInfoRepository.getListIdMotelForSearch(timePay,inputTitle,inputProject, location, listPriceRange, listMotelType,  listAmenities , size, flag, offset, maxResults);
         PageCustomer<MotelInfoDto> pageCustomer = new PageCustomer<>();
+        List<MotelInfoDto> motelInfoDtos = new ArrayList<>();
         for(Long id : pageCustomerId.getListObject()){
             Motel motel = motelRepository.findById(id).get();
             MotelInfoDto motelInfoDto = new MotelInfoDto();
+            motelInfoDto.setTypePay(timePay);
             covertMotelToMotelInfo(motel, motelInfoDto);
+            motelInfoDtos.add(motelInfoDto);
         }
-        return null;
+        pageCustomer.setListObject(motelInfoDtos);
+        pageCustomer.setPage(offset);
+        pageCustomer.setTotalPage(pageCustomerId.getTotalPage());
+        pageCustomer.setLimitRecordInPage(maxResults);
+        pageCustomer.setTotalRecord(pageCustomerId.getTotalRecord());
+        return pageCustomer;
     }
+
     private void covertMotelToMotelInfo(Motel motel, MotelInfoDto motelInfoDto){
         motelInfoDto.setTitle(motel.getTitle());
         motelInfoDto.setShortContent(motel.getShortContent());
@@ -56,7 +63,13 @@ public class MotelServiceImpl implements MotelService {
         motelInfoDto.setListAmenities(motel.getAmenities());
 
         motelInfoDto.setLocationName(motel.getLocation().getName());
-        motelInfoDto.setPrice(null);
-        motelInfoDto.setTypePay(null);
+        for(MotelPayInfoDetail motelPayInfoDetail: motel.getMotelPayInfoDetails()){
+            if(motelInfoDto.getTypePay().equals(motelPayInfoDetail.getTimePay().getTypeTime())){
+                motelInfoDto.setPrice(motelPayInfoDetail.getPrice());
+            }
+        }
+        motelInfoDto.setProjectType(motel.getProjectMotel().getName());
+        motelInfoDto.setNameUserPort(motel.getCreateBy());
+        motelInfoDto.setTimePort(motel.getCreateAt());
     }
 }

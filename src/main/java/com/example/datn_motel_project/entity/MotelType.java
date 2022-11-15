@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,6 @@ import java.util.Set;
 public class MotelType extends BaseEntity {
     private String name;
     @JsonIgnore
-    @ManyToMany(mappedBy = "motelType", fetch = FetchType.LAZY)
-    private Set<Motel> motels;
+    @ManyToMany(mappedBy = "motelTypes", fetch = FetchType.LAZY)
+    private Set<Motel> motels = new HashSet<>();
 }

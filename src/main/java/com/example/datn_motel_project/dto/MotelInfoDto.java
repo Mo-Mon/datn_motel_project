@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -30,4 +31,5 @@ public class MotelInfoDto {
     private String typePay;
     private String projectType;
     private String nameUserPort;
+    private Date timePort;
 }
