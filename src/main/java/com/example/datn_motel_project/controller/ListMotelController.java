@@ -4,8 +4,10 @@ import com.example.datn_motel_project.Constant.listmotel.AmenitiesInConstant;
 import com.example.datn_motel_project.Constant.listmotel.AmenitiesOutConstant;
 import com.example.datn_motel_project.Constant.listmotel.PriceRange;
 import com.example.datn_motel_project.Constant.listmotel.SizeMotelConstant;
+import com.example.datn_motel_project.entity.Motel;
 import com.example.datn_motel_project.form.ListMotelForm;
 import com.example.datn_motel_project.service.LocationService;
+import com.example.datn_motel_project.service.MotelService;
 import com.example.datn_motel_project.service.MotelTypeService;
 import com.example.datn_motel_project.service.TimePayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,12 +31,24 @@ public class ListMotelController {
     @Autowired
     private TimePayService timePayService;
 
+    @Autowired
+    private MotelService motelService;
     @GetMapping("/home")
     public String goHome(HttpSession session, Model model) {
-        model.addAttribute("listMotelForm", new ListMotelForm());
+        ListMotelForm listMotelForm = new ListMotelForm();
+        model.addAttribute("listMotelForm", listMotelForm);
         setupView(model);
         getData(model);
+        getListRecordPage(model,listMotelForm);
         return "/listmotel";
+    }
+
+    private void getListRecordPage(Model model, ListMotelForm listMotelForm) {
+        motelService.findListMotelInfo(
+                listMotelForm.getTimePay(),
+                listMotelForm.getInputTitle(),
+                listMotelForm.getInputProject(),
+                listMotelForm.getLocation())
     }
 
     @GetMapping("/home/search")

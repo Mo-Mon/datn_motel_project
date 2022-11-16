@@ -13,10 +13,11 @@ public class ListMotelForm {
     private String inputTitle;
     private String inputProject;
     private String location;
-    private String typePay;
+    private String timePay;
     private List<String> listPriceRange;
     private List<String> listMotelType;
     private List<String> listAmenitiesIn;
     private List<String> listAmenitiesOut;
     private String size;
+    private String pageCurrent;
 }
