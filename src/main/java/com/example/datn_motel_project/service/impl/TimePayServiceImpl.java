@@ -15,4 +15,9 @@ public class TimePayServiceImpl implements TimePayService {
         return timePayRepository.getListStringTimePay();
     }
 
+    @Override
+    public String getStringTimePayById(Integer id) {
+        return timePayRepository.getStringTimePayById(id);
+    }
+
 }

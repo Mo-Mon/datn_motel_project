@@ -25,7 +25,10 @@ public enum PriceRange {
         this.max = max;
     }
 
-    public List<PriceRange> getListPriceRangeById(List<Integer> listId){
+    public static List<PriceRange> getListPriceRangeById(List<Integer> listId){
+        if(listId == null || listId.size() == 0){
+            return null;
+        }
         List<PriceRange> priceRanges = new ArrayList<>();
         for(Integer id: listId){
             PriceRange priceRange = getPriceRangeByid(id);
@@ -36,7 +39,7 @@ public enum PriceRange {
         return priceRanges;
     }
 
-    public PriceRange getPriceRangeByid(Integer id){
+    public static PriceRange getPriceRangeByid(Integer id){
         for(PriceRange priceRange: PriceRange.values()){
             if(priceRange.getId() == id){
                 return priceRange;

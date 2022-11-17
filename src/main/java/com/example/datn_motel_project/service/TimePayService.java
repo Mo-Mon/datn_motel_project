@@ -4,4 +4,5 @@ import java.util.List;
 
 public interface TimePayService {
     public List<String> getListStringTimePay();
+    public String getStringTimePayById(Integer id);
 }

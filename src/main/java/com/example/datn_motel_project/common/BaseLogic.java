@@ -6,10 +6,15 @@ import com.example.datn_motel_project.entity.base.BaseEntity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BaseLogic {
-    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Base.formatDate);
+    public static Boolean checkEmptyString(String s){
+        return (s == null || "".equals(s));
+    }
+    public static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(Base.FORMAT_DATE);
     public static void setInfoAccountCreate(Account account, BaseEntity baseEntity){
         baseEntity.setCreateAt(new Date());
         baseEntity.setUpdateAt(new Date());
@@ -31,4 +36,18 @@ public class BaseLogic {
         return simpleDateFormat.parse(s);
     }
 
+    public static Integer getOffset(Integer pageCurrent){
+        return (pageCurrent - 1) * Base.MAX_RECORD_IN_PAGE;
+    }
+
+    public static List<Integer> getListPaging(int totalPage,  int currentPage) {
+        List<Integer> listPaging = new ArrayList<>();
+        int index = (currentPage - 1) / Base.LIMIT_PAGING;
+        int i = 0;
+        while (i < Base.LIMIT_PAGING && (index * Base.LIMIT_PAGING + 1) + i <= totalPage) {
+            listPaging.add((index * Base.LIMIT_PAGING + 1) + i);
+            i++;
+        }
+        return listPaging;
+    }
 }
