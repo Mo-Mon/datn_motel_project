@@ -49,7 +49,7 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
     TimePayRepository timePayRepository;
     @Override
     public void run(String... args) throws Exception {
-
+//
 //        Account account = new Account();
 //        account.setEmail("sonmnt@gmail.com");
 //        account.setFullName("Mai Ngọc Tùng Sơn");
@@ -76,7 +76,7 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        BaseLogic.setInfoAccountCreate(account,account);
 //        accountRepository.save(account);
 //
-//        Account a = accountRepository.findAccountByEmail("sonmnt@gmail.com");
+        Account a = accountRepository.findAccountByEmail("sonmnt@gmail.com");
 //        Location l1 = new Location();
 //        l1.setName("Hà Nội");
 //        BaseLogic.setInfoAccountCreate(a,l1);
@@ -130,25 +130,28 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        projectMotelRepository.save(projectMotel);
 //
 //
-//        ProjectMotel projectMotel1 = projectMotelRepository.findById(15L).get();
-//        Motel motel = new Motel();
-//        BaseLogic.setInfoAccountCreate(a,motel);
-//        motel.setAccount(a);
-//        motel.setTitle("nhà trọ giá rẻ khu Chùa Láng Hà Nội");
-//        motel.setShortContent("giá rẻ nhanh tay lên bạn ơi");
-//        motel.setContent("nhà trọ này bao gồm rất nhiều tiện ích hay ho rông rãi thoài mái ");
-//        motel.setMaxPeople(2);
-//        motel.setCountBedroom(1);
-//        motel.setCountWC(1);
-//        motel.setArea(25);
-//        motel.setCount(2);
-//        motel.setProjectMotel(projectMotel1);
-//        MotelType mmm = motelTypeRepository.findById(11L).get();
-//        Set<MotelType> smt = motel.getMotelTypes();
-//        smt.add(motelTypeRepository.findById(11L).get());
-//        smt.add(motelTypeRepository.findById(12L).get());
-//        motel.setMotelTypes(smt);
-//        motelRepository.save(motel);
+//        for(int i = 0 ;i< 20; i++){
+//            ProjectMotel projectMotel1 = projectMotelRepository.findById(15L).get();
+//            Motel motel = new Motel();
+//            BaseLogic.setInfoAccountCreate(a,motel);
+//            motel.setAccount(a);
+//            motel.setTitle("nhà trọ giá rẻ khu Chùa Láng Hà Nội");
+//            motel.setShortContent("giá rẻ nhanh tay lên bạn ơi");
+//            motel.setContent("nhà trọ này bao gồm rất nhiều tiện ích hay ho rông rãi thoài mái ");
+//            motel.setMaxPeople(2);
+//            motel.setCountBedroom(1);
+//            motel.setCountWC(1);
+//            motel.setArea(25);
+//            motel.setCount(2);
+//            motel.setProjectMotel(projectMotel1);
+//            MotelType mmm = motelTypeRepository.findById(11L).get();
+//            Set<MotelType> smt = motel.getMotelTypes();
+//            smt.add(motelTypeRepository.findById(11L).get());
+//            smt.add(motelTypeRepository.findById(12L).get());
+//            motel.setMotelTypes(smt);
+//            motelRepository.save(motel);
+//        }
+
 //
 //        TimePay timePay = new TimePay();
 //        BaseLogic.setInfoAccountCreate(a, timePay);

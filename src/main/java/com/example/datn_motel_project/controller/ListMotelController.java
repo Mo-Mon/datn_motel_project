@@ -48,7 +48,7 @@ public class ListMotelController {
         setupView(model);
         getData(model);
         getListRecordPage(model,listMotelForm);
-        return "/listmotel";
+        return "listmotel";
     }
 
     private void getListRecordPage(Model model, ListMotelForm listMotelForm) {
@@ -73,14 +73,14 @@ public class ListMotelController {
         model.addAttribute("listPage", listPage);
     }
 
-    @GetMapping("/home/search")
-    @ResponseBody
-    public Object search(@ModelAttribute("listMotelForm")ListMotelForm listMotelForm,Model model) {
+    @GetMapping(value = "/home", params = { "action=search" })
+    public String search(@ModelAttribute("listMotelForm")ListMotelForm listMotelForm,Model model) {
+        listMotelForm.setTimePay(timePayService.getListStringTimePay().get(0));
+        model.addAttribute("listMotelForm", listMotelForm);
+        setupView(model);
+        getData(model);
         getListRecordPage(model,listMotelForm);
-        List<Object> list = new ArrayList<>();
-        list.add(model.getAttribute("pageCustomer"));
-        list.add(model.getAttribute("listPage"));
-        return list;
+        return "listmotel";
     }
 
     private void setupView(Model model) {

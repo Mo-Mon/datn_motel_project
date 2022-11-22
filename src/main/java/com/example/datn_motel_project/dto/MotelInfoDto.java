@@ -7,13 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class MotelInfoDto {
+    private Long id;
     private String title;
     private String shortContent;
     private String content;

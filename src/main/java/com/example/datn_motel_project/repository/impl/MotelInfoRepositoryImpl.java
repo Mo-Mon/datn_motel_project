@@ -55,6 +55,18 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
         if(!BaseLogic.checkEmptyString(timePay)) {
             listParam.add(timePay);
         }
+        if(!BaseLogic.checkEmptyString(inputTitle)) {
+            query += " and m.title like ?";
+            listParam.add("%"+inputTitle+"%");
+        }
+        if(!BaseLogic.checkEmptyString(inputProject)) {
+            query += " and pm.name like ?";
+            listParam.add("%"+inputProject+"%");
+        }
+        if(!BaseLogic.checkEmptyString(location)){
+            query += " and l.name like ?";
+            listParam.add(location);
+        }
         return jdbcTemplate.query(query,listParam.toArray(),(rs, rowNum) ->
                 new Integer(rs.getInt("count"))
         ).get(0);
@@ -67,7 +79,7 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
                 "left join (motel_limit_gender as mlg inner join gender as g on mlg.gender_id = g.id)  on m.id = mlg.motel_id   " +
                 "left join (motel_amenities_detail as mad inner join amenities as am on mad.amenties_id = am.id) on mad.motel_id = m.id " +
                 "left join (motel_type_detail as mtd inner join motel_type as mt on mtd.type_id = mt.id) on mtd.motel_id = m.id  "
-                +" where 1 = 1 and m.title like ? and pm.name like ? and l.name like ? ";
+                +" where 1 = 1  ";
 
         if(flag){
             query += " and m.count_hired < m.count ";
@@ -96,10 +108,28 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
         if(size != null && size > 0){
             query += " and m.area > "+size.toString()+" ";
         }
+        List<Object> listParam = new ArrayList<>();
+        if(!BaseLogic.checkEmptyString(timePay)) {
+            listParam.add(timePay);
+        }
+        if(!BaseLogic.checkEmptyString(inputTitle)) {
+            query += " and m.title like ?";
+            listParam.add("%"+inputTitle+"%");
+        }
+        if(!BaseLogic.checkEmptyString(inputProject)) {
+            query += " and pm.name like ?";
+            listParam.add("%"+inputProject+"%");
+        }
+        if(!BaseLogic.checkEmptyString(location)){
+            query += " and l.name like ?";
+            listParam.add(location);
+        }
         query += " limit ? offset ? ";
+        listParam.add(maxResults);
+        listParam.add(offset);
         System.out.println(query);
         PageCustomer<Long> pageCustomer = new PageCustomer<>();
-        pageCustomer.setListObject(jdbcTemplate.query(query,new Object[]{ timePay, "%"+inputTitle+"%", "%"+inputProject+"%", "%"+location+"%",maxResults,offset},(rs, rowNum) ->
+        pageCustomer.setListObject(jdbcTemplate.query(query,listParam.toArray(),(rs, rowNum) ->
                         new Long(rs.getLong("id"))
         ));
         pageCustomer.setTotalRecord(getTotalRecord(timePay,inputTitle, inputProject,location, listPriceRange, listMotelType, listAmenities ,size,flag));

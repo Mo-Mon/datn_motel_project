@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $("#btnSearch").click(function(){
-        alert("hdel")
-        $("form").prop("action","/home/search");
+        $("#action").val("search");
+        $("form").prop("action","/home");
         $("form").prop("method","get");
         $("form").submit();
     });

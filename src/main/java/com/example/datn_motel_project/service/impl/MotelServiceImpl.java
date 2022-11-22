@@ -41,6 +41,7 @@ public class MotelServiceImpl implements MotelService {
     }
 
     private void covertMotelToMotelInfo(Motel motel, MotelInfoDto motelInfoDto){
+        motelInfoDto.setId(motel.getId());
         motelInfoDto.setTitle(motel.getTitle());
         motelInfoDto.setShortContent(motel.getShortContent());
         motelInfoDto.setContent(motel.getContent());
@@ -63,7 +64,7 @@ public class MotelServiceImpl implements MotelService {
         motelInfoDto.setListMotelType(listMotelType);
         motelInfoDto.setListAmenities(motel.getAmenities());
 
-        motelInfoDto.setLocationName(motel.getLocation().getName());
+        motelInfoDto.setLocationName(motel.getLocation() == null?"":motel.getLocation().getName());
         for(MotelPayInfoDetail motelPayInfoDetail: motel.getMotelPayInfoDetails()){
             if(motelInfoDto.getTypePay().equals(motelPayInfoDetail.getTimePay().getTypeTime())){
                 motelInfoDto.setPrice(motelPayInfoDetail.getPrice());

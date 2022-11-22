@@ -26,6 +26,7 @@
         </div>
         <form th:object="${listMotelForm}">
         <div class="d-sm-flex align-items-sm-center py-sm-3 px-md-3 location">
+            <input id="action" name = "action" value = "" hidden/>
             <input th:field="*{inputTitle}" type="text" required placeholder="Tiêu đề" class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control">
             <input th:field="*{inputProject}" type="text" required placeholder="Dự án" class="mx-sm-2 mx-3 my-sm-0 my-2 form-control">
             <select th:field="*{location}" name="location" class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select" id="sel1"
@@ -150,8 +151,8 @@
                                     alt="" class="hotel-img"></div>
                             <div class="col-lg-9">
                                 <div class="d-md-flex align-items-md-center">
-                                    <div class="name" th:text = "${item.title}"> <span class="city">Bandra, Mumbai</span></div>
-                                    <div class="ms-auto code text-uppercase">ABD09eh8</div>
+                                    <div class="name" ><div th:text = "${item.title}"></div> <span class="city" th:text="${item.locationName}"></span></div>
+                                    <div class="ms-auto code text-uppercase" th:text="'Còn lại: '+${item.count}"></div>
                                 </div>
                                 <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>
                                     <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span
@@ -176,7 +177,7 @@
                                 alt="" class="hotel-img"></div>
                         <div class="col-lg-9">
                             <div class="d-md-flex align-items-md-center">
-                                <div class="name"> <span class="city">Bandra, Mumbai</span></div>
+                                <div class="name"><div>nhà trọ giá rẻ khu Chùa Láng Hà Nội</div> <span class="city">Bandra, Mumbai</span></div>
                                 <div class="ms-auto code text-uppercase">ABD09eh8</div>
                             </div>
                             <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>
@@ -196,13 +197,25 @@
                 </div>
                 <div th:field="*{pageCurrent}"></div>
                 <div>
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    <br>
+                    <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <div th:if="${listPage.get(0) > 1}">
+                            <li class="page-item"><a class="btn btn-outline-danger marginleft" th:value="${listPage.get(0) - 1}"><< Trở về</a></li>
+                        </div>
+                        <div th:each="item:${listPage}">
+                            <div th:if="${item == listMotelForm.pageCurrent}">
+                                <li class="page-item disabled" ><a class="btn btn-primary text-uppercase gradient-custom-2" th:text="${item}"/>
+                            </div>
+                            <div th:if="${item != listMotelForm.pageCurrent}">
+                                <li class="page-item "><a class="btn btn-outline-danger marginleft" th:value="${item}" th:text="${item}"/>
+                            </div>
+                        </div>
+                        <div th:if="${listPage.get(listPage.size() - 1) < pageCustomer.totalPage}">
+                            <li class="page-item"><a class="btn btn-outline-danger marginleft" th:value="${listPage.get(listPage.size() - 1) + 1}" >tiếp >></a></li>
+                        </div>
                     </ul>
+                    </nav>
                 </div>
             </div>
         </div>
