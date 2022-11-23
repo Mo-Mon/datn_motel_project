@@ -3,41 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/moteldetailinfor.css">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/moteldetailinfor.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/moteldetailinfor.js"></script>
+    <script th:src="@{/js/common.js}"></script>
+    <script th:src="@{/js/moteldetailinfor.js}"></script>
 </head>
 <body>
+<div th:insert="header.html"></div>
 <div class="container mt-5 mb-5">
+    <h2 th:text="${motelInfoDto.title}"></h2>
+    <h6 th:text="'★ Người đăng: '+${accountInfoDto.getName()}"></h6>
+    <br>
+    <h4 th:text="'đã thuê: '+ ${motelInfoDto.countHired}+'/'+${motelInfoDto.count}"></h4>
+    <br>
     <div class="card">
         <div class="row g-0">
             <div class="col-md-6 border-end">
                 <div class="d-flex flex-column justify-content-center">
-                    <div class="main_image"><img src="https://i.imgur.com/TAzli1U.jpg" id="main_product_image"
-                                                 width="350"></div>
-                    <div class="thumbnail_images">
-                        <ul id="thumbnail">
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/TAzli1U.jpg" width="70"></li>
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/w6kEctd.jpg" width="70"></li>
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/L7hFD8X.jpg" width="70"></li>
-                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/6ZufmNS.jpg" width="70"></li>
-                        </ul>
+                    <div th:if="${motelInfoDto.listImage == null || motelInfoDto.listImage.size() == 0}">
+                        <div class="main_image"><img src="https://i.imgur.com/TAzli1U.jpg" id="main_product_image"
+                                                     width="350"></div>
+                    </div>
+                    <div th:if="${motelInfoDto.listImage != null && motelInfoDto.listImage.size() > 0}">
+                        <div class="main_image"><img th:src="'/image/'+${motelInfoDto.listImage.get(0)}" id="main_product_image"
+                                                     width="350"></div>
+                        <div class="thumbnail_images">
+                            <ul id="thumbnail">
+                                <th:block th:each="item:${motelInfoDto.listImage}">
+                                    <li><img onclick="changeImage(this)" th:src="'/image/'+${item}" width="70"></li>
+                                </th:block>
+                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/TAzli1U.jpg" width="70"></li>-->
+                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/w6kEctd.jpg" width="70"></li>-->
+                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/L7hFD8X.jpg" width="70"></li>-->
+                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/6ZufmNS.jpg" width="70"></li>-->
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 scroll-page">
                 <div class="p-3 right-side">
-                    <div class="d-flex justify-content-between align-items-center"><h3>IIlana</h3>    <span
+                    <div class="d-flex justify-content-between align-items-center"><h3> Thông Tin Chi Tiết</h3>    <span
                             class="heart"><i class='bx bx-heart'></i></span></div>
-                    <div class="mt-2 pr-3 content"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                        eiusmod tempor incididunt ut labore et dolore magna aliqua</p></div>
-                    <h3>$430.99</h3>
+                    <div th:text="${' ★tối đa: '+motelInfoDto.maxPeople+' người  ★pn: '+motelInfoDto.countBedroom +' ★wc: '+motelInfoDto.countWC +' ★diện tích: '+motelInfoDto.area +' m²'}"></div>
+                    <div class="mt-2 pr-3 content"><p th:text="${motelInfoDto.shortContent}"></p></div>
+                    <h3 th:text="'Giá: '+ ${motelInfoDto.price}+' đồng'"></h3>
                     <div class="ratings d-flex flex-row align-items-center">
                         <div class="d-flex flex-row"><i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
                                 class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i class='bx bx-star'></i></div>
                         <span>441 reviews</span></div>
+                    <br>
+                    <h5>Thông tin mô tả chi tiết: </h5>
+                    <div><span class="fas fa-comment-dollar"></span>
+                        Tiện ích:
+                        <th:block th:each="a:${motelInfoDto.listAmenities}">
+                            <span class="badge rounded-pill bg-secondary" th:text="${a.name}"></span>
+                        </th:block>
+                    </div>
+
+                    <div><span class="fas fa-comment-dollar"></span>
+                        Thể Loại:
+                        <th:block th:each="mt:${motelInfoDto.listMotelType}">
+                            <span class="badge rounded-pill bg-secondary" th:text="${mt}"></span>
+                        </th:block>
+                    </div>
+                    <div>
+                        hạn chế :
+                        <th:block th:each="lg:${motelInfoDto.limitGenders}">
+                            <span class="badge rounded-pill bg-secondary"><div th:text="${lg}"></div></span>
+                        </th:block>
+                    </div>
+                    <div>
+                        <span th:text="${motelInfoDto.content}"></span>
+                    </div>
                     <div class="mt-5"><span class="fw-bold">Color</span>
                         <div class="colors">
                             <ul id="marker">

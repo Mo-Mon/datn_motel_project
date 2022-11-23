@@ -157,5 +157,11 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        BaseLogic.setInfoAccountCreate(a, timePay);
 //        timePay.setTypeTime("Tháng");
 //        timePayRepository.save(timePay);
+//        Role role = new Role();
+//        role.setRoleName("ROLE_SELLER");
+//        BaseLogic.setInfoAccountCreate(a,role);
+//        roleRepository.save(role);
+//        a.getRoles().add(role);
+//        accountRepository.save(a);
     }
 }

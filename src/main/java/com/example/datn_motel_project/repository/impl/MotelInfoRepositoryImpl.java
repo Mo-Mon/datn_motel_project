@@ -16,13 +16,12 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     public Integer getTotalRecord(String timePay,String inputTitle, String  inputProject, String location, List<PriceRange> listPriceRange, List<String> listMotelType, List<String> listAmenities , Integer size, Boolean flag){
-        String query = "select count(distinct m.id) as count from motel as m left join location as l on m.location_id = l.id  left join project_motel as pm on m.project_id = pm.id " +
-                "left join (motel_pay_info_detail as mpid inner join time_pay as tp on (mpid.time_pay_id = tp.id and tp.type_time = ?)) on m.id = mpid.motel_id " +
-                "left join (motel_limit_gender as mlg inner join gender as g on mlg.gender_id = g.id)  on m.id = mlg.motel_id   " +
-                "left join (motel_amenities_detail as mad inner join amenities as am on mad.amenties_id = am.id) on mad.motel_id = m.id " +
-                "left join (motel_type_detail as mtd inner join motel_type as mt on mtd.type_id = mt.id) on mtd.motel_id = m.id  "
-                +" where 1 = 1 " ;
-//                "and m.title like ? and pm.name like ? and l.name like ? ";
+        String query = "select count(distinct m.id) as count from motel as m left join location as l on (m.location_id = l.id and l.delete_flag = 0) left join project_motel as pm on (m.project_id = pm.id and pm.delete_flag = 0) " +
+                "left join (motel_pay_info_detail as mpid inner join time_pay as tp on (mpid.time_pay_id = tp.id and tp.type_time = ? and tp.delete_flag = 0 )) on (m.id = mpid.motel_id and mpid.delete_flag = 0) " +
+                "left join (motel_limit_gender as mlg inner join gender as g on (mlg.gender_id = g.id and g.delete_flag = 0))  on (m.id = mlg.motel_id )  " +
+                "left join (motel_amenities_detail as mad inner join amenities as am on (mad.amenties_id = am.id and am.delete_flag = 0)) on (mad.motel_id = m.id )" +
+                "left join (motel_type_detail as mtd inner join motel_type as mt on (mtd.type_id = mt.id and mt.delete_flag = 0)) on (mtd.motel_id = m.id ) "
+                +" where 1 = 1 and m.delete_flag = 0 " ;
 
         if(flag){
             query += " and m.count_hired < m.count ";
@@ -72,14 +71,12 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
         ).get(0);
     }
     public PageCustomer<Long> getListIdMotelForSearch(String timePay,String inputTitle, String  inputProject, String location, List<PriceRange> listPriceRange, List<String> listMotelType, List<String> listAmenities , Integer size, Boolean flag, Integer offset, Integer maxResults){
-        String query = "select distinct m.id from motel as m " +
-                "left join location as l on m.location_id = l.id  " +
-                "left join project_motel as pm on m.project_id = pm.id " +
-                "left join (motel_pay_info_detail as mpid inner join time_pay as tp on (mpid.time_pay_id = tp.id and tp.type_time = ?)) on m.id = mpid.motel_id " +
-                "left join (motel_limit_gender as mlg inner join gender as g on mlg.gender_id = g.id)  on m.id = mlg.motel_id   " +
-                "left join (motel_amenities_detail as mad inner join amenities as am on mad.amenties_id = am.id) on mad.motel_id = m.id " +
-                "left join (motel_type_detail as mtd inner join motel_type as mt on mtd.type_id = mt.id) on mtd.motel_id = m.id  "
-                +" where 1 = 1  ";
+        String query = "select distinct m.id  from motel as m left join location as l on (m.location_id = l.id and l.delete_flag = 0) left join project_motel as pm on (m.project_id = pm.id and pm.delete_flag = 0) " +
+                "left join (motel_pay_info_detail as mpid inner join time_pay as tp on (mpid.time_pay_id = tp.id and tp.type_time = ? and tp.delete_flag = 0 )) on (m.id = mpid.motel_id and mpid.delete_flag = 0) " +
+                "left join (motel_limit_gender as mlg inner join gender as g on (mlg.gender_id = g.id and g.delete_flag = 0))  on (m.id = mlg.motel_id )  " +
+                "left join (motel_amenities_detail as mad inner join amenities as am on (mad.amenties_id = am.id and am.delete_flag = 0)) on (mad.motel_id = m.id )" +
+                "left join (motel_type_detail as mtd inner join motel_type as mt on (mtd.type_id = mt.id and mt.delete_flag = 0)) on (mtd.motel_id = m.id ) "
+                +" where 1 = 1 and m.delete_flag = 0 " ;
 
         if(flag){
             query += " and m.count_hired < m.count ";

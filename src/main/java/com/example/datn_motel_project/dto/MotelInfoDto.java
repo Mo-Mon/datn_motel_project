@@ -22,6 +22,7 @@ public class MotelInfoDto {
     private int countWC;
     private float area;
     private int count;
+    private int countHired;
     private Set<Image> listImage;
     private Set<String> limitGenders;
     private Set<String> listMotelType;

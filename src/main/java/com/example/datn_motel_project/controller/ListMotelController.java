@@ -83,6 +83,16 @@ public class ListMotelController {
         return "listmotel";
     }
 
+    @GetMapping(value = "/home", params = { "action=paging" })
+    public String getPaging(@ModelAttribute("listMotelForm")ListMotelForm listMotelForm,Model model) {
+        listMotelForm.setTimePay(timePayService.getListStringTimePay().get(0));
+        model.addAttribute("listMotelForm", listMotelForm);
+        setupView(model);
+        getData(model);
+        getListRecordPage(model,listMotelForm);
+        return "listmotel";
+    }
+
     private void setupView(Model model) {
         model.addAttribute("listPriceRange", PriceRange.values());
         model.addAttribute("listAmenitiesIn", AmenitiesInConstant.values());

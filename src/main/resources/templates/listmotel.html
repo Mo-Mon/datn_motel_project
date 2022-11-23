@@ -25,200 +25,225 @@
             </div>
         </div>
         <form th:object="${listMotelForm}">
-        <div class="d-sm-flex align-items-sm-center py-sm-3 px-md-3 location">
-            <input id="action" name = "action" value = "" hidden/>
-            <input th:field="*{inputTitle}" type="text" required placeholder="Tiêu đề" class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control">
-            <input th:field="*{inputProject}" type="text" required placeholder="Dự án" class="mx-sm-2 mx-3 my-sm-0 my-2 form-control">
-            <select th:field="*{location}" name="location" class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select" id="sel1"
-                    style="width: 320px">
-                <option value = "">---- Vị trí ----</option>
-                <div th:each="item:${listLocation}">
-                    <option th:value="${item}" th:text="${item}"></option>
-                </div>
-            </select>
-            <select th:field="*{timePay}" name="timePay" class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select" id="sel1"
-                    style="width: 320px">
-                <div th:each="item:${listTimePay}">
-                    <option th:value="${item}" th:text="${item}"></option>
-                </div>
-            </select>
-            <input id="btnSearch" type="button" value="search" class="btn btn-primary mx-3 my-sm-0 mb-2 gradient-custom-2"></div>
-        <div class="d-sm-flex">
-            <div class="me-sm-2">
-                <div id="filter" class="p-2 bg-light ms-md-4 ms-sm-2 border">
-                    <div class="border-bottom h5 text-uppercase">Bộ Lọc</div>
-                    <div class="box border-bottom">
-                        <div class="box-label text-uppercase d-flex align-items-center">Mức giá
-                            <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"><span
-                                    class="fas fa-plus"></span></button>
-                        </div>
-                        <div id="inner-box" class="collapse show">
-                            <div th:each="item:${listPriceRange}">
-                                <div th:if="${item.min == 0}">
-                                    <div class="my-1"><label class="tick">
-                                        <div th:text="'nhỏ hơn - '+${item.max}"></div>
-                                        <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}"> <span
-                                            class="check" checked="checked"></span> </label></div>
+            <div class="d-sm-flex align-items-sm-center py-sm-3 px-md-3 location">
+                <input id="action" name="action" value="" hidden/>
+                <input th:field="*{inputTitle}" type="text" required placeholder="Tiêu đề"
+                       class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control">
+                <input th:field="*{inputProject}" type="text" required placeholder="Dự án"
+                       class="mx-sm-2 mx-3 my-sm-0 my-2 form-control">
+                <select th:field="*{location}" name="location"
+                        class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select" id="sel1"
+                        style="width: 320px">
+                    <option value="">---- Vị trí ----</option>
+                    <div th:each="item:${listLocation}">
+                        <option th:value="${item}" th:text="${item}"></option>
+                    </div>
+                </select>
+                <select th:field="*{timePay}" name="timePay"
+                        class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select" id="sel1"
+                        style="width: 320px">
+                    <div th:each="item:${listTimePay}">
+                        <option th:value="${item}" th:text="${item}"></option>
+                    </div>
+                </select>
+                <input id="btnSearch" type="button" value="Tìm kiếm"
+                       class="btn btn-primary mx-3 my-sm-0 mb-2 gradient-custom-2"></div>
+            <div class="d-sm-flex">
+                <div class="me-sm-2">
+                    <div id="filter" class="p-2 bg-light ms-md-4 ms-sm-2 border">
+                        <div class="border-bottom h5 text-uppercase">Bộ Lọc</div>
+                        <div class="box border-bottom">
+                            <div class="box-label text-uppercase d-flex align-items-center">Mức giá
+                                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#inner-box" aria-expanded="false"
+                                        aria-controls="inner-box"><span
+                                        class="fas fa-plus"></span></button>
+                            </div>
+                            <div id="inner-box" class="collapse show">
+                                <div th:each="item:${listPriceRange}">
+                                    <div th:if="${item.min == 0}">
+                                        <div class="my-1"><label class="tick">
+                                            <div th:text="'nhỏ hơn - '+${item.max}"></div>
+                                            <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}">
+                                            <span
+                                                    class="check" checked="checked"></span> </label></div>
+                                    </div>
+
+                                    <div th:if="${item.max == 2147483647}">
+                                        <div class="my-1"><label class="tick">
+                                            <div th:text="${item.min}+ ' - lớn hơn'"></div>
+                                            <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}">
+                                            <span
+                                                    class="check"></span> </label></div>
+                                    </div>
+
+                                    <div th:if="${(item.min != 0) && (item.max != 2147483647)}">
+                                        <div class="my-1"><label class="tick">
+                                            <div th:text="${item.min}+ '-'+${item.max}"></div>
+                                            <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}">
+                                            <span
+                                                    class="check"></span> </label></div>
+                                    </div>
+
                                 </div>
 
-                                <div th:if="${item.max == 2147483647}">
+                            </div>
+                        </div>
+                        <div class="box border-bottom">
+                            <div class="box-label text-uppercase d-flex align-items-center">Loại Tài Sản
+                                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#property" aria-expanded="false" aria-controls="property"><span
+                                        class="fas fa-plus"></span></button>
+                            </div>
+                            <div id="property" class="collapse show">
+                                <div th:each="item:${listMotelType}">
                                     <div class="my-1"><label class="tick">
-                                        <div th:text="${item.min}+ ' - lớn hơn'"></div>
-                                        <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}"> <span
+                                        <div th:text="${item}"></div>
+                                        <input type="checkbox" th:value="${item}" th:field="*{listMotelType}"> <span
                                             class="check"></span> </label></div>
                                 </div>
-
-                                <div th:if="${(item.min != 0) && (item.max != 2147483647)}">
+                            </div>
+                        </div>
+                        <div class="box border-bottom">
+                            <div class="box-label text-uppercase d-flex align-items-center">Tiện ích bên ngoài
+                                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#amenities" aria-expanded="false"
+                                        aria-controls="amenities"><span
+                                        class="fas fa-plus"></span></button>
+                            </div>
+                            <div id="amenities" class="collapse show">
+                                <div th:each="item:${listAmenitiesOut}">
                                     <div class="my-1"><label class="tick">
-                                        <div th:text="${item.min}+ '-'+${item.max}"></div>
-                                        <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}"> <span
-                                            class="check"></span> </label></div>
+                                        <div th:text="${item.title}"></div>
+                                        <input type="checkbox" th:value="${item.id}" th:field="*{listAmenitiesOut}">
+                                        <span class="check"></span> </label></div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="box-label text-uppercase d-flex align-items-center">tiện ích bên trong
+                                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#room-facilities" aria-expanded="false"
+                                        aria-controls="room-facilities"><span class="fas fa-plus"></span></button>
+                            </div>
+                            <div id="room-facilities" class="collapse show">
+                                <div th:each="item:${listAmenitiesIn}">
+                                    <div class="my-1"><label class="tick">
+                                        <div th:text="${item.title}"></div>
+                                        <input type="checkbox" th:value="${item.id}" th:field="*{listAmenitiesIn}">
+                                        <span class="check"></span> </label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box border-bottom">
+                            <div class="box-label text-uppercase d-flex align-items-center">Diện tích
+                                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#room-facilities" aria-expanded="false"
+                                        aria-controls="room-facilities"><span class="fas fa-plus"></span></button>
+                            </div>
+                            <div id="1" class="collapse show">
+                                <div th:each="item:${listSize}">
+                                    <div class="my-1"><label>
+                                        <input class="form-check-input" type="radio" name="radioSize"
+                                               th:id="${item.id.toString()}" th:value="${item.size}"
+                                               th:field="*{size}"/>
+                                        <label class="form-check-label" th:for="${item.id.toString()}"
+                                               th:text="'Diện tích từ '+${item.size}+' m²'"></label>
+                                        <span class="check"></span> </label></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-2 border" id="hotels">
+                    <div th:each="item:${pageCustomer.listObject}">
+                        <div class="hotel py-2 px-2 pb-4 border-bottom">
+                            <div class="row">
+                                <div class="col-lg-3"><img
+                                        src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
+                                        alt="" class="hotel-img"></div>
+                                <div class="col-lg-9">
+                                    <div class="d-md-flex align-items-md-center">
+                                        <div class="name">
+                                            <div th:text="${item.title}"></div>
+                                            <span class="city" th:text="${item.locationName}"></span></div>
+                                        <div class="ms-auto code text-uppercase"
+                                             th:text="'Còn lại: '+${item.count}"></div>
+                                    </div>
+                                    <div class="rating"><span class="fas fa-star"></span> <span
+                                            class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span
+                                                class="far fa-star"></span> <!-- Book now Enquiry --> </div>
+                                    <div class="d-flex flex-column tags pt-1">
+                                        <div><span class="fas fa-comment-dollar"></span>
+                                            <div th:text="${' ★tối đa: '+item.maxPeople+' người  ★pn: '+item.countBedroom +' ★wc: '+item.countWC +' ★diện tích: '+item.area +' m²'}"></div>
+                                        </div>
+                                        <div><span class="fas fa-receipt"></span>
+                                            <div th:text="${'★Giá: '+item.price+' đồng /'+item.typePay+' ★dự án: '+item.projectType}"></div>
+                                        </div>
+                                        <div><span class="fas fa-concierge-bell"></span>
+                                            <div th:text="${' ★tác giả :'+item.nameUserPort+' ★ ngày đăng bài: ' +item.timePort}"></div>
+                                        </div>
+                                        <div><span class="fas fa-concierge-bell"></span>
+                                            <div th:text="${' ★mô tả: '+item.shortContent}"></div>
+                                        </div>
+                                        <div><span class="fas fa-comment-dollar"></span>
+                                            Tiện ích:
+                                            <th:block th:each="a:${item.listAmenities}">
+                                                <span class="badge rounded-pill bg-secondary" th:text="${a.name}"></span>
+                                            </th:block>
+                                        </div>
+                                        <div>
+                                            Loại:
+                                            <th:block th:each="mt:${item.listMotelType}">
+                                                <span class="badge rounded-pill bg-secondary"><div th:text="${mt}"></div></span>
+                                            </th:block>
+                                        </div>
+                                        <div>
+                                            hạn chế :
+                                            <th:block th:each="lg:${item.limitGenders}">
+                                                <span class="badge rounded-pill bg-secondary"><div th:text="${lg}"></div></span>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end mt-1">
+                                <div class="btn btn-outline-danger marginleft">Lưu để xem sau</div>
+                                <a th:href="'/motelDetailInfo/'+${item.id}" class="btn btn-primary text-uppercase gradient-custom-2 marginleft">Xem Chi Tiết</a>
+                            </div>
 
-                            </div>
-
                         </div>
                     </div>
-                    <div class="box border-bottom">
-                        <div class="box-label text-uppercase d-flex align-items-center">Loại Tài Sản
-                            <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#property" aria-expanded="false" aria-controls="property"><span
-                                    class="fas fa-plus"></span></button>
-                        </div>
-                        <div id="property" class="collapse show">
-                            <div th:each="item:${listMotelType}">
-                                <div class="my-1"><label class="tick">
-                                    <div th:text="${item}"></div>
-                                    <input type="checkbox" th:value="${item}" th:field="*{listMotelType}"> <span
-                                        class="check"></span> </label></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box border-bottom">
-                        <div class="box-label text-uppercase d-flex align-items-center">Tiện ích bên ngoài
-                            <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"><span
-                                    class="fas fa-plus"></span></button>
-                        </div>
-                        <div id="amenities" class="collapse show">
-                            <div th:each="item:${listAmenitiesOut}">
-                                <div class="my-1"><label class="tick">
-                                    <div th:text="${item.title}"></div>
-                                    <input type="checkbox" th:value="${item.id}" th:field="*{listAmenitiesOut}">
-                                    <span class="check"></span> </label></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box">
-                        <div class="box-label text-uppercase d-flex align-items-center">tiện ích bên trong
-                            <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#room-facilities" aria-expanded="false"
-                                    aria-controls="room-facilities"><span class="fas fa-plus"></span></button>
-                        </div>
-                        <div id="room-facilities" class="collapse show">
-                            <div th:each="item:${listAmenitiesIn}">
-                                <div class="my-1"><label class="tick">
-                                    <div th:text="${item.title}"></div>
-                                    <input type="checkbox" th:value="${item.id}" th:field="*{listAmenitiesIn}">
-                                    <span class="check"></span> </label></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box border-bottom">
-                        <div class="box-label text-uppercase d-flex align-items-center">Diện tích
-                            <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#room-facilities" aria-expanded="false"
-                                    aria-controls="room-facilities"><span class="fas fa-plus"></span></button>
-                        </div>
-                        <div id="1" class="collapse show">
-                            <div th:each="item:${listSize}">
-                                <div class="my-1"><label>
-                                    <input class="form-check-input" type="radio" name="radioSize" th:id="${item.id.toString()}" th:value="${item.id.toString()}" th:field="*{size}"/>
-                                    <label class="form-check-label" th:for="${item.id.toString()}" th:text="'Diện tích từ '+${item.size}+' m²'"></label>
-                                    <span class="check"></span> </label></div>
-                            </div>
-                        </div>
+                    <input id="pageCurrent" th:field="*{pageCurrent}" hidden/>
+                    <div>
+                        <br>
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <div th:if="${listPage.get(0) > 1}">
+                                    <li class="page-item"><button class="btn btn-outline-danger marginleft btn-paging-click"
+                                                             th:value="${listPage.get(0) - 1}"><< Trở về</button></li>
+                                </div>
+                                <div th:each="item:${listPage}">
+                                    <div th:if="${item == listMotelForm.pageCurrent}">
+                                        <li class="page-item disabled"><button
+                                                class="btn btn-primary text-uppercase gradient-custom-2 marginleft"
+                                                th:text="${item}"/>
+                                    </div>
+                                    <div th:if="${item != listMotelForm.pageCurrent}">
+                                        <li class="page-item "><button class="btn btn-paging-click btn-outline-danger marginleft"
+                                                                  th:value="${item}" th:text="${item}"/>
+                                    </div>
+                                </div>
+                                <div th:if="${listPage.get(listPage.size() - 1) < pageCustomer.totalPage}">
+                                    <li class="page-item"><button class="btn btn-paging-click btn-outline-danger marginleft"
+                                                             th:value="${listPage.get(listPage.size() - 1) + 1}">tiếp >></button></li>
+                                </div>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-            <div class="bg-white p-2 border" id="hotels">
-                <div th:each = "item:${pageCustomer.listObject}">
-                    <div class="hotel py-2 px-2 pb-4 border-bottom">
-                        <div class="row">
-                            <div class="col-lg-3"><img
-                                    src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
-                                    alt="" class="hotel-img"></div>
-                            <div class="col-lg-9">
-                                <div class="d-md-flex align-items-md-center">
-                                    <div class="name" ><div th:text = "${item.title}"></div> <span class="city" th:text="${item.locationName}"></span></div>
-                                    <div class="ms-auto code text-uppercase" th:text="'Còn lại: '+${item.count}"></div>
-                                </div>
-                                <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>
-                                    <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span
-                                            class="far fa-star"></span> <!-- Book now Enquiry --> </div>
-                                <div class="d-flex flex-column tags pt-1">
-                                    <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                    <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                    <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-1">
-                            <div class="btn btn-outline-danger marginleft">Enquiry</div>
-                            <div class="btn btn-primary text-uppercase gradient-custom-2 marginleft">Book Now</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="hotel py-2 px-2 pb-4 border-bottom">
-                    <div class="row">
-                        <div class="col-lg-3"><img
-                                src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
-                                alt="" class="hotel-img"></div>
-                        <div class="col-lg-9">
-                            <div class="d-md-flex align-items-md-center">
-                                <div class="name"><div>nhà trọ giá rẻ khu Chùa Láng Hà Nội</div> <span class="city">Bandra, Mumbai</span></div>
-                                <div class="ms-auto code text-uppercase">ABD09eh8</div>
-                            </div>
-                            <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>
-                                <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span
-                                        class="far fa-star"></span> <!-- Book now Enquiry --> </div>
-                            <div class="d-flex flex-column tags pt-1">
-                                <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                                <div><span class="fas fa-receipt"></span> Express check-in</div>
-                                <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end mt-1">
-                        <div class="btn btn-outline-danger marginleft">Enquiry</div>
-                        <div class="btn btn-primary text-uppercase gradient-custom-2 marginleft">Book Now</div>
-                    </div>
-                </div>
-                <div th:field="*{pageCurrent}"></div>
-                <div>
-                    <br>
-                    <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <div th:if="${listPage.get(0) > 1}">
-                            <li class="page-item"><a class="btn btn-outline-danger marginleft" th:value="${listPage.get(0) - 1}"><< Trở về</a></li>
-                        </div>
-                        <div th:each="item:${listPage}">
-                            <div th:if="${item == listMotelForm.pageCurrent}">
-                                <li class="page-item disabled" ><a class="btn btn-primary text-uppercase gradient-custom-2" th:text="${item}"/>
-                            </div>
-                            <div th:if="${item != listMotelForm.pageCurrent}">
-                                <li class="page-item "><a class="btn btn-outline-danger marginleft" th:value="${item}" th:text="${item}"/>
-                            </div>
-                        </div>
-                        <div th:if="${listPage.get(listPage.size() - 1) < pageCustomer.totalPage}">
-                            <li class="page-item"><a class="btn btn-outline-danger marginleft" th:value="${listPage.get(listPage.size() - 1) + 1}" >tiếp >></a></li>
-                        </div>
-                    </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
         </form>
     </div>
 </div>

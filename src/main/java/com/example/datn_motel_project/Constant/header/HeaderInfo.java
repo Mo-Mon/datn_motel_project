@@ -3,7 +3,8 @@ import lombok.Getter;
 
 @Getter
 public enum HeaderInfo {
-    NOTE("note",new ScreenInfo[]{ScreenInfo.Login});
+    NOTE("note",new ScreenInfo[]{ScreenInfo.Login}),
+    MANAGER_MOTEL("quản lý nhà trọ", new ScreenInfo[]{ScreenInfo.MANAGER_MOTEL_SELLER});
     String headerName;
     ScreenInfo[] screens;
 

@@ -1,5 +1,6 @@
 package com.example.datn_motel_project.service.impl;
 
+import com.example.datn_motel_project.entity.Account;
 import com.example.datn_motel_project.entity.Image;
 import com.example.datn_motel_project.repository.ImageRepository;
 import com.example.datn_motel_project.service.ImageService;
@@ -44,7 +45,7 @@ public class ImageServiceImpl implements ImageService {
                 .contains(fileExtension.trim().toLowerCase());
     }
     @Override
-    public String storeFile(MultipartFile file) {
+    public Image storeFile(MultipartFile file, Account account) {
         try {
             System.out.println("bắt đầu lấy ảnh");
             if (file.isEmpty()) {
@@ -72,8 +73,7 @@ public class ImageServiceImpl implements ImageService {
             }
             Image image = new Image();
             image.setPath(generatedFileName);
-            imageRepository.save(image);
-            return generatedFileName;
+            return imageRepository.save(image);
         }
         catch (IOException exception) {
             throw new RuntimeException("đã có lỗi xảy ra khi lưu file", exception);
@@ -119,10 +119,10 @@ public class ImageServiceImpl implements ImageService {
 
     @Override
     @Transactional(rollbackFor = {Exception.class, Throwable.class})
-    public List<String> storeListFile(List<MultipartFile> files) {
-        List<String> listFileName = new ArrayList<>();
+    public List<Image> storeListFile(List<MultipartFile> files, Account account) {
+        List<Image> listFileName = new ArrayList<>();
         for(MultipartFile file: files){
-            listFileName.add(storeFile(file));
+            listFileName.add(storeFile(file,account));
         }
         return listFileName;
     }

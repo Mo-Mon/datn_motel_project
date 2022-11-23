@@ -1,6 +1,7 @@
 package com.example.datn_motel_project.service.impl;
 
 import com.example.datn_motel_project.Constant.listmotel.PriceRange;
+import com.example.datn_motel_project.dto.AccountInfoDto;
 import com.example.datn_motel_project.dto.MotelInfoDto;
 import com.example.datn_motel_project.entity.*;
 import com.example.datn_motel_project.repository.MotelInfoRepository;
@@ -40,6 +41,18 @@ public class MotelServiceImpl implements MotelService {
         return pageCustomer;
     }
 
+    public MotelInfoDto getMotelInfoById(Long id){
+        Motel motel = motelRepository.findById(id).get();
+        MotelInfoDto motelInfoDto = new MotelInfoDto();
+        covertMotelToMotelInfo(motel,motelInfoDto);
+        return motelInfoDto;
+    }
+
+    @Override
+    public AccountInfoDto getAccountPortMotel(Long id) {
+        return motelRepository.getAccountPortMotel(id);
+    }
+
     private void covertMotelToMotelInfo(Motel motel, MotelInfoDto motelInfoDto){
         motelInfoDto.setId(motel.getId());
         motelInfoDto.setTitle(motel.getTitle());
@@ -50,6 +63,7 @@ public class MotelServiceImpl implements MotelService {
         motelInfoDto.setCountWC(motel.getCountWC());
         motelInfoDto.setArea(motel.getArea());
         motelInfoDto.setCount(motel.getCount());
+        motelInfoDto.setCountHired(motel.getCountHired());
 
         motelInfoDto.setListImage(motel.getImages());
         Set<String> listLimitGenders = new LinkedHashSet<>();

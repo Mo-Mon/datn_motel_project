@@ -1,7 +1,9 @@
 package com.example.datn_motel_project.controller;
 
 import com.example.datn_motel_project.entity.Image;
+import com.example.datn_motel_project.repository.AccountRepository;
 import com.example.datn_motel_project.repository.ImageRepository;
+import com.example.datn_motel_project.service.AccountService;
 import com.example.datn_motel_project.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class DummyController {
     @Autowired
     private ImageService imageService;
 
+    @Autowired
+    private AccountRepository accountRepository;
     @GetMapping("/dummy")
     public String getListImage(Model model) {
         List<Image> list = imageRepository.findAll();
@@ -33,9 +38,8 @@ public class DummyController {
     }
 
     @PostMapping("/dummy/upload")
-    public String uploadImage(Model model, @RequestParam("image") MultipartFile file) {
-        String name = imageService.storeFile(file);
-        model.addAttribute("msg", "Uploaded images: " + name);
+    public String uploadImage(Model model, @RequestParam("image") MultipartFile file, HttpSession session) {
+        Image image = imageService.storeFile(file,accountRepository.findById( (Long) session.getAttribute("accountId")).get());
         return "redirect:/";
     }
 

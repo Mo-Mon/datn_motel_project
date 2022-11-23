@@ -4,7 +4,9 @@ import lombok.Getter;
 
 @Getter
 public enum ScreenInfo {
-    Login( "Login Page", "/login", RoleInfo.USER.getRoleName());
+    Login( "Login Page", "/login", RoleInfo.USER.getRoleName()),
+
+    MANAGER_MOTEL_SELLER("quản lý trọ (người bán)","/seller/managerMotel", RoleInfo.SELLER.getRoleName());
 
     private String roles;
 
