@@ -23,6 +23,7 @@ public class MotelInfoDto {
     private float area;
     private int count;
     private int countHired;
+    private String status;
     private Set<Image> listImage;
     private Set<String> limitGenders;
     private Set<String> listMotelType;

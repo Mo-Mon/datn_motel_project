@@ -2,7 +2,9 @@ package com.example.datn_motel_project.entity;
 
 import com.example.datn_motel_project.entity.base.BaseEntity;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,7 +12,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Motel extends BaseEntity {
     private String title;
@@ -22,6 +25,7 @@ public class Motel extends BaseEntity {
     private float area;
     private int count;
     private int countHired;
+    private Integer status;
     @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_limit_gender",
             joinColumns = @JoinColumn(name = "motel_id"),

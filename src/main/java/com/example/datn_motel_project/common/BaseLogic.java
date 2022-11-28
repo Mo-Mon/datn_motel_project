@@ -40,6 +40,10 @@ public class BaseLogic {
         return (pageCurrent - 1) * Base.MAX_RECORD_IN_PAGE;
     }
 
+    public static Integer getPage(Integer offset){
+        return offset/Base.MAX_RECORD_IN_PAGE + 1;
+    }
+
     public static List<Integer> getListPaging(int totalPage,  int currentPage) {
         List<Integer> listPaging = new ArrayList<>();
         int index = (currentPage - 1) / Base.LIMIT_PAGING;

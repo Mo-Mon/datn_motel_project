@@ -34,419 +34,470 @@
   <link href="/css/managermotel.css" rel="stylesheet" media="all">
 </head>
 <body>
+<div th:insert="header.html"></div>
+<form th:object="${listMotelManagerForm}">
+  <div id="content">
+    <div class="container my-sm-5 border p-0 bg-sec-light">
+      <div >
+        <div>
+          <div class="card-3">
+            <div>
+              <ul class="tab-list">
+                <li class="tab-list__item active">
+                  <a class="tab-list__link" href="#tab1" data-toggle="tab">hotels</a>
+                </li>
+                <li class="tab-list__item">
+                  <a class="tab-list__link" href="#tab2" data-toggle="tab">car</a>
+                </li>
+                <li class="tab-list__item">
+                  <a class="tab-list__link" href="#tab3" data-toggle="tab">flight</a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
+                  <form method="POST" action="#">
+                    <button class="btn-submit" type="submit">+ Thêm Mới</button>
+                    <br>
+                    <div class="input-group">
+                      <label class="label">Going to</label>
+                      <input class="input--style-1" type="text" name="address" placeholder="Destination, hotel name" required="required">
+                      <i class="zmdi zmdi-pin input-group-symbol"></i>
+                    </div>
+                    <div class="row row-space">
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">check-in</label>
+                          <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start">
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">check-out</label>
+                          <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end">
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="input-group">
+                      <label class="label">travellers</label>
+                      <i class="zmdi zmdi-account-add input-group-symbol"></i>
+                      <div class="input-group-icon" id="js-select-special">
+                        <input class="input--style-1" type="text" name="traveller" value="1 Adult, 0 Children, 1 Room" disabled="disabled" id="info">
+                        <i class="zmdi zmdi-chevron-down input-icon"></i>
+                      </div>
+                      <div class="dropdown-select">
+                        <ul class="list-room">
+                          <li class="list-room__item">
+                            <span class="list-room__name">Room 1</span>
+                            <ul class="list-person">
+                              <li class="list-person__item">
+                                <span class="name">Adults</span>
+                                <div class="quantity quantity1">
+                                  <span class="minus">-</span>
+                                  <input class="inputQty" type="number" min="0" value="1">
+                                  <span class="plus">+</span>
+                                </div>
+                              </li>
+                              <li class="list-person__item">
+                                <span class="name">Children</span>
+                                <div class="quantity quantity2">
+                                  <span class="minus">-</span>
+                                  <input class="inputQty" type="number" min="0" value="0">
+                                  <span class="plus">+</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                        <div class="list-room__footer">
+                          <a href="#" id="btn-add-room">Add room</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="checkbox-row">
+                      <label class="checkbox-container m-r-45">Add a flight
+                        <input type="checkbox" checked="checked" name="add-flight">
+                        <span class="checkmark"></span>
+                      </label>
+                      <label class="checkbox-container">Add a car
+                        <input type="checkbox" name="add-car">
+                        <span class="checkmark"></span>
+                      </label>
+                    </div>
+                    <button class="btn-submit" type="submit">search</button>
+                    <button class="btn-submit" type="submit">Xóa Tất Cả</button>
+                    <button class="btn-submit" type="submit">Chạy QC tất cả</button>
+                  </form>
+                </div>
+                <div class="tab-pane" id="tab2">
+                  <form method="POST" action="#">
+                    <div class="input-group">
+                      <label class="label">location:</label>
+                      <input class="input--style-1" type="text" name="location" placeholder="Destination, hotel name" required="required">
+                      <i class="zmdi zmdi-pin input-group-symbol"></i>
+                    </div>
+                    <div class="row row-space">
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">driver age:</label>
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                          <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="driver-age">
+                              <option>23</option>
+                              <option>24</option>
+                              <option selected="selected">25</option>
+                              <option>26</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">car group:</label>
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                          <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="car-group">
+                              <option selected="selected">Group S-car</option>
+                              <option>Group 1</option>
+                              <option>Group 2</option>
+                              <option>Group 3</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-space">
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">pick up:</label>
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                          <input class="input--style-1 js-single-datepicker" type="text" name="pickup" placeholder="mm/dd/yyyy" data-drop="1">
+                          <div class="dropdown-datepicker" id="dropdown-datepicker1"></div>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">time:</label>
+                          <i class="zmdi zmdi-time input-group-symbol"></i>
+                          <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="time-pickup">
+                              <option selected="selected">10:00 AM</option>
+                              <option>5:00 AM</option>
+                              <option>6:00 AM</option>
+                              <option>7:00 AM</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row row-space">
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">drop off:</label>
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                          <input class="input--style-1 js-single-datepicker" type="text" name="dropoff" placeholder="mm/dd/yyyy" data-drop="2">
+                          <div class="dropdown-datepicker" id="dropdown-datepicker2"></div>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">time:</label>
+                          <i class="zmdi zmdi-time input-group-symbol"></i>
+                          <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="time-dropoff">
+                              <option selected="selected">10:00 AM</option>
+                              <option>5:00 AM</option>
+                              <option>6:00 AM</option>
+                              <option>7:00 AM</option>
+                            </select>
+                            <div class="select-dropdown"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button class="btn-submit m-t-15" type="submit">search</button>
+                  </form>
+                </div>
+                <div class="tab-pane" id="tab3">
+                  <form method="POST" action="#">
+                    <div class="input-group">
+                      <label class="label">origin</label>
+                      <i class="zmdi zmdi-pin input-group-symbol"></i>
+                      <input class="input--style-1" type="text" name="origin" placeholder="City or airport" required="required">
+                    </div>
+                    <div class="input-group">
+                      <label class="label">destination:</label>
+                      <i class="zmdi zmdi-pin input-group-symbol"></i>
+                      <input class="input--style-1" type="text" name="destination" placeholder="City or airport" required="required">
+                    </div>
+                    <div class="row row-space">
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">Departing</label>
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                          <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start-2">
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="input-group">
+                          <label class="label">returning</label>
+                          <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                          <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end-2">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="radio-row">
+                      <label class="radio-container m-r-45">First Class
+                        <input type="radio" name="class">
+                        <span class="radio-checkmark"></span>
+                      </label>
+                      <label class="radio-container m-r-45">Business
+                        <input type="radio" name="class">
+                        <span class="radio-checkmark"></span>
+                      </label>
+                      <label class="radio-container">Economy
+                        <input type="radio" checked="checked" name="class">
+                        <span class="radio-checkmark"></span>
+                      </label>
+                    </div>
+                    <button class="btn-submit" type="submit">search</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-sm-flex">
+        <div class="me-sm-2">
+          <div id="filter" class="p-2 bg-light ms-md-4 ms-sm-2 border">
+            <div class="border-bottom h5 text-uppercase">Bộ lọc</div>
+            <div class="box border-bottom">
+              <div class="box-label text-uppercase d-flex align-items-center">Giá
+                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"><span
+                        class="fas fa-plus"></span></button>
+              </div>
+              <div id="inner-box" class="collapse show">
+                <div th:each="item:${listPriceRange}">
+                  <div th:if="${item.min == 0}">
+                    <div class="my-1"><label class="tick">
+                      <div th:text="'nhỏ hơn - '+${item.max}"></div>
+                      <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}">
+                      <span
+                              class="check" checked="checked"></span> </label></div>
+                  </div>
 
-<div id="content">
-  <div class="container my-sm-5 border p-0 bg-sec-light">
-    <div >
+                  <div th:if="${item.max == 2147483647}">
+                    <div class="my-1"><label class="tick">
+                      <div th:text="${item.min}+ ' - lớn hơn'"></div>
+                      <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}">
+                      <span
+                              class="check"></span> </label></div>
+                  </div>
+
+                  <div th:if="${(item.min != 0) && (item.max != 2147483647)}">
+                    <div class="my-1"><label class="tick">
+                      <div th:text="${item.min}+ '-'+${item.max}"></div>
+                      <input type="checkbox" th:value="${item.id}" th:field="*{listPriceRange}">
+                      <span
+                              class="check"></span> </label></div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="box border-bottom">
+              <div class="box-label text-uppercase d-flex align-items-center">Loại Tài Sản
+                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#property" aria-expanded="false" aria-controls="property"><span
+                        class="fas fa-plus"></span></button>
+              </div>
+              <div id="property" class="collapse show">
+                <div th:each="item:${listMotelType}">
+                  <div class="my-1"><label class="tick">
+                    <div th:text="${item}"></div>
+                    <input type="checkbox" th:value="${item}" th:field="*{listMotelType}"> <span
+                          class="check"></span> </label></div>
+                </div>
+              </div>
+            </div>
+            <div class="box border-bottom">
+              <div class="box-label text-uppercase d-flex align-items-center">Tiện ích bên ngoài
+                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"><span
+                        class="fas fa-plus"></span></button>
+              </div>
+              <div id="amenities" class="collapse show">
+                <div th:each="item:${listAmenitiesOut}">
+                  <div class="my-1"><label class="tick">
+                    <div th:text="${item.title}"></div>
+                    <input type="checkbox" th:value="${item.id}" th:field="*{listAmenitiesOut}">
+                    <span class="check"></span> </label></div>
+                </div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-label text-uppercase d-flex align-items-center">tiện ích bên trong
+                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#room-facilities" aria-expanded="false"
+                        aria-controls="room-facilities"><span class="fas fa-plus"></span></button>
+              </div>
+              <div id="room-facilities" class="collapse show">
+                <div th:each="item:${listAmenitiesIn}">
+                  <div class="my-1"><label class="tick">
+                    <div th:text="${item.title}"></div>
+                    <input type="checkbox" th:value="${item.id}" th:field="*{listAmenitiesIn}">
+                    <span class="check"></span> </label></div>
+                </div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="box-label text-uppercase d-flex align-items-center">tiện ích bên trong
+                <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#room-facilities-1" aria-expanded="false"
+                        aria-controls="room-facilities-1"><span class="fas fa-plus"></span></button>
+              </div>
+              <div id="room-facilities-1" class="collapse show">
+                <div th:each="item:${listSize}">
+                  <div class="my-1"><label>
+                    <input class="form-check-input" type="radio" name="radioSize"
+                           th:id="${item.id.toString()}" th:value="${item.size}"
+                           th:field="*{size}"/>
+                    <label class="form-check-label" th:for="${item.id.toString()}"
+                           th:text="'Diện tích từ '+${item.size}+' m²'"></label>
+                    <span class="check"></span> </label></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white p-2 border" id="hotels">
+          <div class="hotel py-2 px-2 pb-4 border-bottom">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col" width="5%"><input class="form-check-input" type="checkbox"></th>
+                <th>No.</th>
+                <th>Id</th>
+                <th>Ngày đăng</th>
+                <th>Đã cho thuê</th>
+                <th>Trạng thái</th>
+              </tr>
+              </thead>
+              <tbody>
+              <div th:each="item,index:${pageCustomer.listObject}">
+              <tr>
+                <td scope="row"><input class="form-check-input" type="checkbox"></td>
+                <td th:text="${index.index + 1}"></td>
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.timePort}"></td>
+                <td th:text="${item.countHired}+'/'+${item.count}"></td>
+                <td th:text="${item.status}"></td>
+              </tr>
+              <tr>
+                <td colspan="6">
+                  <div class="row">
+                    <div class="col-lg-3"><img
+                            src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
+                            alt="" class="hotel-img"></div>
+                    <div class="col-lg-9">
+                      <div class="d-md-flex align-items-md-center">
+                        <div class="name">
+                          <div th:text="${item.title}"></div>
+                          <span class="city" th:text="${item.locationName}"></span></div>
+                        <div class="ms-auto code text-uppercase"
+                             th:text="'Còn lại: '+${item.count}"></div>
+                      </div>
+                      <div class="rating"><span class="fas fa-star"></span> <span
+                              class="fas fa-star"></span>
+                        <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span
+                                class="far fa-star"></span> <!-- Book now Enquiry --> </div>
+                      <div class="d-flex flex-column tags pt-1">
+                        <div><span class="fas fa-comment-dollar"></span>
+                          <div th:text="${' ★tối đa: '+item.maxPeople+' người  ★pn: '+item.countBedroom +' ★wc: '+item.countWC +' ★diện tích: '+item.area +' m²'}"></div>
+                        </div>
+                        <div><span class="fas fa-receipt"></span>
+                          <div th:text="${'★Giá: '+item.price+' đồng /'+item.typePay+' ★dự án: '+item.projectType}"></div>
+                        </div>
+                        <div><span class="fas fa-concierge-bell"></span>
+                          <div th:text="${' ★tác giả :'+item.nameUserPort+' ★ ngày đăng bài: ' +item.timePort}"></div>
+                        </div>
+                        <div><span class="fas fa-concierge-bell"></span>
+                          <div th:text="${' ★mô tả: '+item.shortContent}"></div>
+                        </div>
+                        <div><span class="fas fa-comment-dollar"></span>
+                          Tiện ích:
+                          <th:block th:each="a:${item.listAmenities}">
+                            <span class="badge rounded-pill bg-secondary" th:text="${a.name}"></span>
+                          </th:block>
+                        </div>
+                        <div>
+                          Loại:
+                          <th:block th:each="mt:${item.listMotelType}">
+                            <span class="badge rounded-pill bg-secondary"><div th:text="${mt}"></div></span>
+                          </th:block>
+                        </div>
+                        <div>
+                          hạn chế :
+                          <th:block th:each="lg:${item.limitGenders}">
+                            <span class="badge rounded-pill bg-secondary"><div th:text="${lg}"></div></span>
+                          </th:block>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mt-1">
+                    <div class="btn btn-outline-danger marginleft">Xem chi tiết</div>
+                    <div class="btn btn-outline-danger marginleft">Chỉnh sửa</div>
+                    <div class="btn btn-outline-danger marginleft">Xóa</div>
+                    <div class="btn btn-outline-danger marginleft">Đăng ký QC</div>
+                  </div>
+                </td>
+              </tr>
+              </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
       <div>
-        <div class="card-3">
-          <div>
-            <ul class="tab-list">
-              <li class="tab-list__item active">
-                <a class="tab-list__link" href="#tab1" data-toggle="tab">hotels</a>
-              </li>
-              <li class="tab-list__item">
-                <a class="tab-list__link" href="#tab2" data-toggle="tab">car</a>
-              </li>
-              <li class="tab-list__item">
-                <a class="tab-list__link" href="#tab3" data-toggle="tab">flight</a>
-              </li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab1">
-                <form method="POST" action="#">
-                  <div class="input-group">
-                    <label class="label">Going to</label>
-                    <input class="input--style-1" type="text" name="address" placeholder="Destination, hotel name" required="required">
-                    <i class="zmdi zmdi-pin input-group-symbol"></i>
-                  </div>
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">check-in</label>
-                        <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start">
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">check-out</label>
-                        <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end">
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="input-group">
-                    <label class="label">travellers</label>
-                    <i class="zmdi zmdi-account-add input-group-symbol"></i>
-                    <div class="input-group-icon" id="js-select-special">
-                      <input class="input--style-1" type="text" name="traveller" value="1 Adult, 0 Children, 1 Room" disabled="disabled" id="info">
-                      <i class="zmdi zmdi-chevron-down input-icon"></i>
-                    </div>
-                    <div class="dropdown-select">
-                      <ul class="list-room">
-                        <li class="list-room__item">
-                          <span class="list-room__name">Room 1</span>
-                          <ul class="list-person">
-                            <li class="list-person__item">
-                              <span class="name">Adults</span>
-                              <div class="quantity quantity1">
-                                <span class="minus">-</span>
-                                <input class="inputQty" type="number" min="0" value="1">
-                                <span class="plus">+</span>
-                              </div>
-                            </li>
-                            <li class="list-person__item">
-                              <span class="name">Children</span>
-                              <div class="quantity quantity2">
-                                <span class="minus">-</span>
-                                <input class="inputQty" type="number" min="0" value="0">
-                                <span class="plus">+</span>
-                              </div>
-                            </li>
-                          </ul>
-                        </li>
-                      </ul>
-                      <div class="list-room__footer">
-                        <a href="#" id="btn-add-room">Add room</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="checkbox-row">
-                    <label class="checkbox-container m-r-45">Add a flight
-                      <input type="checkbox" checked="checked" name="add-flight">
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox-container">Add a car
-                      <input type="checkbox" name="add-car">
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <button class="btn-submit" type="submit">search</button>
-                </form>
+        <br>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <div th:if="${listPage.get(0) > 1}">
+              <li class="page-item"><button class="btn btn-outline-danger marginleft btn-paging-click"
+                                            th:value="${listPage.get(0) - 1}"><< Trở về</button></li>
+            </div>
+            <div th:each="item:${listPage}">
+              <div th:if="${item == listMotelManagerForm.pageCurrent}">
+                <li class="page-item disabled"><button
+                        class="btn btn-primary text-uppercase gradient-custom-2 marginleft"
+                        th:text="${item}"/>
               </div>
-              <div class="tab-pane" id="tab2">
-                <form method="POST" action="#">
-                  <div class="input-group">
-                    <label class="label">location:</label>
-                    <input class="input--style-1" type="text" name="location" placeholder="Destination, hotel name" required="required">
-                    <i class="zmdi zmdi-pin input-group-symbol"></i>
-                  </div>
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">driver age:</label>
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                          <select name="driver-age">
-                            <option>23</option>
-                            <option>24</option>
-                            <option selected="selected">25</option>
-                            <option>26</option>
-                          </select>
-                          <div class="select-dropdown"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">car group:</label>
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                          <select name="car-group">
-                            <option selected="selected">Group S-car</option>
-                            <option>Group 1</option>
-                            <option>Group 2</option>
-                            <option>Group 3</option>
-                          </select>
-                          <div class="select-dropdown"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">pick up:</label>
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                        <input class="input--style-1 js-single-datepicker" type="text" name="pickup" placeholder="mm/dd/yyyy" data-drop="1">
-                        <div class="dropdown-datepicker" id="dropdown-datepicker1"></div>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">time:</label>
-                        <i class="zmdi zmdi-time input-group-symbol"></i>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                          <select name="time-pickup">
-                            <option selected="selected">10:00 AM</option>
-                            <option>5:00 AM</option>
-                            <option>6:00 AM</option>
-                            <option>7:00 AM</option>
-                          </select>
-                          <div class="select-dropdown"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">drop off:</label>
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                        <input class="input--style-1 js-single-datepicker" type="text" name="dropoff" placeholder="mm/dd/yyyy" data-drop="2">
-                        <div class="dropdown-datepicker" id="dropdown-datepicker2"></div>
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">time:</label>
-                        <i class="zmdi zmdi-time input-group-symbol"></i>
-                        <div class="rs-select2 js-select-simple select--no-search">
-                          <select name="time-dropoff">
-                            <option selected="selected">10:00 AM</option>
-                            <option>5:00 AM</option>
-                            <option>6:00 AM</option>
-                            <option>7:00 AM</option>
-                          </select>
-                          <div class="select-dropdown"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn-submit m-t-15" type="submit">search</button>
-                </form>
-              </div>
-              <div class="tab-pane" id="tab3">
-                <form method="POST" action="#">
-                  <div class="input-group">
-                    <label class="label">origin</label>
-                    <i class="zmdi zmdi-pin input-group-symbol"></i>
-                    <input class="input--style-1" type="text" name="origin" placeholder="City or airport" required="required">
-                  </div>
-                  <div class="input-group">
-                    <label class="label">destination:</label>
-                    <i class="zmdi zmdi-pin input-group-symbol"></i>
-                    <input class="input--style-1" type="text" name="destination" placeholder="City or airport" required="required">
-                  </div>
-                  <div class="row row-space">
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">Departing</label>
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                        <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start-2">
-                      </div>
-                    </div>
-                    <div class="col-2">
-                      <div class="input-group">
-                        <label class="label">returning</label>
-                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
-                        <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end-2">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="radio-row">
-                    <label class="radio-container m-r-45">First Class
-                      <input type="radio" name="class">
-                      <span class="radio-checkmark"></span>
-                    </label>
-                    <label class="radio-container m-r-45">Business
-                      <input type="radio" name="class">
-                      <span class="radio-checkmark"></span>
-                    </label>
-                    <label class="radio-container">Economy
-                      <input type="radio" checked="checked" name="class">
-                      <span class="radio-checkmark"></span>
-                    </label>
-                  </div>
-                  <button class="btn-submit" type="submit">search</button>
-                </form>
+              <div th:if="${item != listMotelManagerForm.pageCurrent}">
+                <li class="page-item "><button class="btn btn-paging-click btn-outline-danger marginleft"
+                                               th:value="${item}" th:text="${item}"/>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="d-sm-flex">
-      <div class="me-sm-2">
-        <div id="filter" class="p-2 bg-light ms-md-4 ms-sm-2 border">
-          <div class="border-bottom h5 text-uppercase">Filter By</div>
-          <div class="box border-bottom">
-            <div class="box-label text-uppercase d-flex align-items-center">Price
-              <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#inner-box" aria-expanded="false" aria-controls="inner-box"><span
-                      class="fas fa-plus"></span></button>
+            <div th:if="${listPage.get(listPage.size() - 1) < pageCustomer.totalPage}">
+              <li class="page-item"><button class="btn btn-paging-click btn-outline-danger marginleft"
+                                            th:value="${listPage.get(listPage.size() - 1) + 1}">tiếp >></button></li>
             </div>
-            <div id="inner-box" class="collapse show">
-              <div class="my-1"><label class="tick">Less than 2000 <input type="checkbox"
-                                                                          checked="checked"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">2000 - 3000 <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">3000 - 4500 <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">4500 - 6000 <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">6000 - 8000 <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">8000 -10,000 <input type="checkbox" checked> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">10,000 and Above <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-            </div>
-          </div>
-          <div class="box border-bottom">
-            <div class="box-label text-uppercase d-flex align-items-center">Property Type
-              <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#property" aria-expanded="false" aria-controls="property"><span
-                      class="fas fa-plus"></span></button>
-            </div>
-            <div id="property" class="collapse">
-              <div class="my-1"><label class="tick">Hotels <input type="checkbox" checked="checked"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Apartments <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Guest houses <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Resorts <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Villas <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Lodges <input type="checkbox" checked> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Holiday Homes <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-            </div>
-          </div>
-          <div class="box border-bottom">
-            <div class="box-label text-uppercase d-flex align-items-center">Amenities
-              <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#amenities" aria-expanded="false" aria-controls="amenities"><span
-                      class="fas fa-plus"></span></button>
-            </div>
-            <div id="amenities" class="collapse show">
-              <div class="my-1"><label class="tick">Parking <input type="checkbox" checked="checked">
-                <span class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Pets Allowed <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Room Service <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Family Rooms <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Free Wifi <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Non-smoking Rooms <input type="checkbox" checked>
-                <span class="check"></span> </label></div>
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-label text-uppercase d-flex align-items-center">Room Facilities
-              <button class="btn ms-auto" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#room-facilities" aria-expanded="false"
-                      aria-controls="room-facilities"><span class="fas fa-plus"></span></button>
-            </div>
-            <div id="room-facilities" class="collapse">
-              <div class="my-1"><label class="tick">Air Condentioning <input type="checkbox"
-                                                                             checked="checked"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Desk <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Balcony <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Flat Screen TV <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Coffe/Tea Maker <input type="checkbox"> <span
-                      class="check"></span> </label></div>
-              <div class="my-1"><label class="tick">Washing Machine <input type="checkbox" checked> <span
-                      class="check"></span> </label></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr>
-            <tr>
-
-            </tr>
-            <tr>
-              <td>Mary</td>
-              <td>Moe</td>
-              <td>mary@example.com</td>
-            </tr>
-            <tr>
-              <td>July</td>
-              <td>Dooley</td>
-              <td>july@example.com</td>
-            </tr>
-          </tbody>
-        </table> -->
-      <div class="bg-white p-2 border" id="hotels">
-        <div class="hotel py-2 px-2 pb-4 border-bottom">
-          <table class="table table-hover">
-            <thead>
-            <tr>
-              <th>Firstname</th>
-              <th>Lastname</th>
-              <th>Email</th>
-            </tr>
-            </thead>
-            <!-- </table> -->
-            <!-- <table class="table table-hover"> -->
-            <tbody>
-            <tr>
-              <td>John</td>
-              <td>Doe</td>
-              <td>john@example.com</td>
-            </tr>
-            <tr>
-              <td colspan="3">
-                <div class="row" >
-                  <div class="col-lg-3"><img
-                          src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
-                          alt="" class="hotel-img"></div>
-                  <div class="col-lg-9">
-                    <div class="d-md-flex align-items-md-center">
-                      <div class="name">Mayflower Hibiscus Inn <span class="city">Bandra, Mumbai</span></div>
-                      <div class="ms-auto code text-uppercase">ABD09eh8</div>
-                    </div>
-                    <div class="rating"><span class="fas fa-star"></span> <span class="fas fa-star"></span>
-                      <span class="fas fa-star"></span> <span class="fas fa-star"></span> <span
-                              class="far fa-star"></span> <!-- Book now Enquiry --> </div>
-                    <div class="d-flex flex-column tags pt-1">
-                      <div><span class="fas fa-comment-dollar"></span> Fee Canellation</div>
-                      <div><span class="fas fa-receipt"></span> Express check-in</div>
-                      <div><span class="fas fa-concierge-bell"></span> Concierge</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end mt-1">
-                  <div class="btn btn-outline-danger marginleft">Enquiry</div>
-                  <div class="btn btn-primary text-uppercase gradient-custom-2 marginleft">Book Now</div>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-
-        </div>
+          </ul>
+        </nav>
       </div>
     </div>
   </div>
-</div>
+</form>
+
 <!-- Jquery JS-->
-<script src="vendor/jquery/jquery.min.js"></script>
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 <!-- Vendor JS-->
 <script th:src="@{/vendor/select2/select2.min.js}"></script>
 <script th:src="@{/vendor/jquery-validate/jquery.validate.min.js}"></script>
