@@ -1,5 +1,6 @@
 package com.example.datn_motel_project.controller;
 
+import com.example.datn_motel_project.dto.FileSessionDto;
 import com.example.datn_motel_project.entity.Image;
 import com.example.datn_motel_project.service.AccountService;
 import com.example.datn_motel_project.service.ImageService;
@@ -23,6 +24,16 @@ public class ImageController {
 
     @Autowired
     private AccountService accountService;
+
+    @GetMapping("/session/{name}")
+    public void getDataSession(HttpServletRequest request, HttpServletResponse response, @PathVariable("name") String name,HttpSession session){
+        try {
+            FileSessionDto fileSessionDto = (FileSessionDto) session.getAttribute(name);
+            response.getOutputStream().write(fileSessionDto.getData());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @GetMapping("/imagePublic/{name}")
     public void getData(HttpServletRequest request, HttpServletResponse response, @PathVariable("name") String name){

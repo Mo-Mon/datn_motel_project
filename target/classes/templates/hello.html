@@ -5,10 +5,9 @@
 </head>
 <body>
 <h1>Chỉ những ai đăng nhập mới truy cập được trang này!</h1>
-<h1 th:text="${account.email}"></h1>
-<form th:action="@{/logout}" method="post">
-    <input type="submit" value="Sign Out"/>
-</form>
-
+<h1 th:with="images=${'listImage'+ key}" th:text="${images}"></h1>
+<th:block th:with="images=${'listImage'+ key}" th:each="item:${listImage}">
+    <img th:src="@{'/session/'+${item}}"/>
+</th:block>
 </body>
 </html>

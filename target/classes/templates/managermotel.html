@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="/css/listmotel.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/common.js"></script>
+  <script src="/js/managermotel.js"></script>
   <!-- Required meta tags-->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,6 +39,7 @@
 <body>
 <div th:insert="header.html"></div>
 <form th:object="${listMotelManagerForm}">
+  <input id="action" name="action" value="" hidden/>
   <div id="content">
     <div class="container my-sm-5 border p-0 bg-sec-light">
       <div >
@@ -55,8 +59,7 @@
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab1">
-                  <form method="POST" action="#">
-                    <button class="btn-submit" type="submit">+ Thêm Mới</button>
+                    <button class="btn-submit" type="submit"><a href="/seller/addMotel">+ Thêm Mới</a></button>
                     <br>
                     <div class="input-group">
                       <label class="label">Going to</label>
@@ -125,13 +128,11 @@
                         <span class="checkmark"></span>
                       </label>
                     </div>
-                    <button class="btn-submit" type="submit">search</button>
+                    <button id="btnSearch" class="btn-submit" type="submit">Tìm kiếm</button>
                     <button class="btn-submit" type="submit">Xóa Tất Cả</button>
                     <button class="btn-submit" type="submit">Chạy QC tất cả</button>
-                  </form>
                 </div>
                 <div class="tab-pane" id="tab2">
-                  <form method="POST" action="#">
                     <div class="input-group">
                       <label class="label">location:</label>
                       <input class="input--style-1" type="text" name="location" placeholder="Destination, hotel name" required="required">
@@ -220,10 +221,8 @@
                       </div>
                     </div>
                     <button class="btn-submit m-t-15" type="submit">search</button>
-                  </form>
                 </div>
                 <div class="tab-pane" id="tab3">
-                  <form method="POST" action="#">
                     <div class="input-group">
                       <label class="label">origin</label>
                       <i class="zmdi zmdi-pin input-group-symbol"></i>
@@ -265,7 +264,6 @@
                       </label>
                     </div>
                     <button class="btn-submit" type="submit">search</button>
-                  </form>
                 </div>
               </div>
             </div>
@@ -468,6 +466,7 @@
       </div>
       <div>
         <br>
+        <input id="pageCurrent" th:field="*{pageCurrent}" hidden/>
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
             <div th:if="${listPage.get(0) > 1}">
@@ -492,6 +491,7 @@
           </ul>
         </nav>
       </div>
+      <br>
     </div>
   </div>
 </form>

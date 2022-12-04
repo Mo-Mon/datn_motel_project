@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
             throw new RuntimeException("bị lỗi, không thể tạo file", exception);
         }
     }
-    private boolean isImageFile(MultipartFile file) {
+    public boolean isImageFile(MultipartFile file) {
         String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
         return Arrays.asList(new String[] {"png","jpg","jpeg", "bmp"})
                 .contains(fileExtension.trim().toLowerCase());

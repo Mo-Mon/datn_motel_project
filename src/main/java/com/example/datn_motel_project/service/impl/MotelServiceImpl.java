@@ -104,7 +104,7 @@ public class MotelServiceImpl implements MotelService {
 
         motelInfoDto.setLocationName(motel.getLocation() == null?"":motel.getLocation().getName());
         for(MotelPayInfoDetail motelPayInfoDetail: motel.getMotelPayInfoDetails()){
-            if(motelInfoDto.getTypePay().equals(motelPayInfoDetail.getTimePay().getTypeTime())){
+            if(BaseLogic.checkEmptyString(motelInfoDto.getTypePay()) || motelInfoDto.getTypePay().equals(motelPayInfoDetail.getTimePay().getTypeTime())){
                 motelInfoDto.setPrice(motelPayInfoDetail.getPrice());
             }
         }

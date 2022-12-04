@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -17,17 +19,17 @@ public class MotelInfoDto {
     private String title;
     private String shortContent;
     private String content;
-    private int maxPeople;
-    private int countBedroom;
-    private int countWC;
-    private float area;
-    private int count;
-    private int countHired;
+    private Integer maxPeople;
+    private Integer countBedroom;
+    private Integer countWC;
+    private Float area;
+    private Integer count;
+    private Integer countHired;
     private String status;
-    private Set<Image> listImage;
-    private Set<String> limitGenders;
-    private Set<String> listMotelType;
-    private Set<Amenities> listAmenities;
+    private Set<Image> listImage = new LinkedHashSet<>();
+    private Set<String> limitGenders = new LinkedHashSet<>();
+    private Set<String> listMotelType = new LinkedHashSet<>();
+    private Set<Amenities> listAmenities = new LinkedHashSet<>();
     private String locationName;
     private Long price;
     private String typePay;

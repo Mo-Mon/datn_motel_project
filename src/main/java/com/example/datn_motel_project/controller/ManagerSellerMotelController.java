@@ -61,6 +61,15 @@ public class ManagerSellerMotelController {
         getListRecordPage(accountId,model,listMotelManagerForm);
         return "managermotel";
     }
+    @GetMapping(value = "/managerMotel", params = { "action=paging" })
+    public String getPage(@ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm, Model model, HttpSession session) {
+        model.addAttribute("listMotelManagerForm", listMotelManagerForm);
+        setupView(model);
+        getData(model);
+        Long accountId = (Long) session.getAttribute("accountId");
+        getListRecordPage(accountId,model,listMotelManagerForm);
+        return "managermotel";
+    }
     private void setupView(Model model) {
         model.addAttribute("listPriceRange", PriceRange.values());
         model.addAttribute("listAmenitiesIn", AmenitiesInConstant.values());

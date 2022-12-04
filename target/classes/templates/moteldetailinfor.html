@@ -15,9 +15,12 @@
 <div th:insert="header.html"></div>
 <div class="container mt-5 mb-5">
     <h2 th:text="${motelInfoDto.title}"></h2>
-    <h6 th:text="'★ Người đăng: '+${accountInfoDto.getName()}"></h6>
-    <br>
-    <h4 th:text="'đã thuê: '+ ${motelInfoDto.countHired}+'/'+${motelInfoDto.count}"></h4>
+    <th:block th:if="${accountInfoDto}">
+        <h6 th:text="'★ Người đăng: '+${accountInfoDto.getName()}"></h6>
+        <br>
+        <h4 th:text="'đã thuê: '+ ${motelInfoDto.countHired}+'/'+${motelInfoDto.count}"></h4>
+    </th:block>
+
     <br>
     <div class="card">
         <div class="row g-0">

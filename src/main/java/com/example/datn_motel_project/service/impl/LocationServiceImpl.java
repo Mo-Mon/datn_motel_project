@@ -14,11 +14,22 @@ public class LocationServiceImpl implements LocationService {
     @Autowired
     private LocationRepository locationRepository;
 
+    @Override
     public List<String> getListLocation(){
         List<String> listLocation = new ArrayList<>();
         for(Location location : locationRepository.findAll()){
             listLocation.add(location.getName());
         }
         return listLocation;
+    }
+
+    @Override
+    public List<Location> findAllLocation(){
+        return locationRepository.findAllLocation();
+    }
+
+    @Override
+    public Location findLocationById(Long id){
+        return locationRepository.findAllLocationById(id);
     }
 }

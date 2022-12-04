@@ -163,5 +163,13 @@ public class DatnMotelProjectApplication implements CommandLineRunner {
 //        roleRepository.save(role);
 //        a.getRoles().add(role);
 //        accountRepository.save(a);
+//        for(int i = 0; i< 9; i++){
+//            Amenities am1 = new Amenities();
+//            am1.setName(AmenitiesInConstant.WIFI.name());
+//            am1.setType("0");
+//            am1.setAccountId(a.getId());
+//            BaseLogic.setInfoAccountCreate(a,am1);
+//            amenitiesRepository.save(am1);
+//        }
     }
 }
