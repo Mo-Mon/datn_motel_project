@@ -13,97 +13,180 @@
 </head>
 <body>
 <div th:insert="header.html"></div>
-<div class="container mt-5 mb-5">
-    <h2 th:text="${motelInfoDto.title}"></h2>
-    <th:block th:if="${accountInfoDto}">
-        <h6 th:text="'★ Người đăng: '+${accountInfoDto.getName()}"></h6>
+<form>
+    <input id="action" name="action" value="" hidden/>
+    <input type="text" th:value="${key}" name="key" hidden/>
+    <div class="container mt-5 mb-5">
+        <div th:if="${motelDetailInfoForm.mode == 'preview'}">
+            <input class="btn btn-outline-danger marginleft" type="submit" id="save" value="Lưu"/>
+            <input class="btn btn-outline-danger marginleft" type="submit" id="previos" value="Trở về"/>
+            <input class="btn btn-outline-danger marginleft" type="submit" id="cancel" value="Hủy"/>
+        </div>
         <br>
-        <h4 th:text="'đã thuê: '+ ${motelInfoDto.countHired}+'/'+${motelInfoDto.count}"></h4>
-    </th:block>
+        <h2 th:text="${motelDetailInfoForm.motelInfoDto.title}"></h2>
 
-    <br>
-    <div class="card">
-        <div class="row g-0">
-            <div class="col-md-6 border-end">
-                <div class="d-flex flex-column justify-content-center">
-                    <div th:if="${motelInfoDto.listImage == null || motelInfoDto.listImage.size() == 0}">
-                        <div class="main_image"><img src="https://i.imgur.com/TAzli1U.jpg" id="main_product_image"
-                                                     width="350"></div>
-                    </div>
-                    <div th:if="${motelInfoDto.listImage != null && motelInfoDto.listImage.size() > 0}">
-                        <div class="main_image"><img th:src="'/image/'+${motelInfoDto.listImage.get(0)}" id="main_product_image"
-                                                     width="350"></div>
+        <br>
+        <div class="card">
+            <div class="row g-0">
+                <div class="col-md-6 border-end">
+                    <div class="d-flex flex-column justify-content-center">
+                        <div class="main_image">
+                            <th:block th:if="${motelDetailInfoForm.listImageOld != null && motelDetailInfoForm.listImageOld.size() > 0}">
+                                <img th:src="'/imagePublic/'+${motelDetailInfoForm.listImageOld.get(0).path}"
+                                     id="main_product_image"
+                                     width="350">
+                            </th:block>
+                            <th:block th:if="${motelDetailInfoForm.mode == 'preview' && (motelDetailInfoForm.listImageOld == null || motelDetailInfoForm.listImageOld.size() == 0)}">
+                                <img th:src="'/session/'+${listImage.get(0)}"
+                                     id="main_product_image"
+                                     width="350">
+                            </th:block>
+                        </div>
                         <div class="thumbnail_images">
                             <ul id="thumbnail">
-                                <th:block th:each="item:${motelInfoDto.listImage}">
-                                    <li><img onclick="changeImage(this)" th:src="'/image/'+${item}" width="70"></li>
+                                <th:block th:each="item:${motelDetailInfoForm.listImageOld}">
+                                    <li><img onclick="changeImage(this)" th:src="'/imagePublic/'+${item.path}" width="70"></li>
                                 </th:block>
-                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/TAzli1U.jpg" width="70"></li>-->
-                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/w6kEctd.jpg" width="70"></li>-->
-                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/L7hFD8X.jpg" width="70"></li>-->
-                                <!--                            <li><img onclick="changeImage(this)" src="https://i.imgur.com/6ZufmNS.jpg" width="70"></li>-->
+                                <th:block th:each="item:${listImage}">
+                                    <li><img onclick="changeImage(this)" th:src="'/session/'+${item}" width="70"></li>
+                                </th:block>
                             </ul>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 scroll-page">
-                <div class="p-3 right-side">
-                    <div class="d-flex justify-content-between align-items-center"><h3> Thông Tin Chi Tiết</h3>    <span
-                            class="heart"><i class='bx bx-heart'></i></span></div>
-                    <div th:text="${' ★tối đa: '+motelInfoDto.maxPeople+' người  ★pn: '+motelInfoDto.countBedroom +' ★wc: '+motelInfoDto.countWC +' ★diện tích: '+motelInfoDto.area +' m²'}"></div>
-                    <div class="mt-2 pr-3 content"><p th:text="${motelInfoDto.shortContent}"></p></div>
-                    <h3 th:text="'Giá: '+ ${motelInfoDto.price}+' đồng'"></h3>
-                    <div class="ratings d-flex flex-row align-items-center">
-                        <div class="d-flex flex-row"><i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
-                                class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i class='bx bx-star'></i></div>
-                        <span>441 reviews</span></div>
-                    <br>
-                    <h5>Thông tin mô tả chi tiết: </h5>
-                    <div><span class="fas fa-comment-dollar"></span>
-                        Tiện ích:
-                        <th:block th:each="a:${motelInfoDto.listAmenities}">
-                            <span class="badge rounded-pill bg-secondary" th:text="${a.name}"></span>
-                        </th:block>
-                    </div>
-
-                    <div><span class="fas fa-comment-dollar"></span>
-                        Thể Loại:
-                        <th:block th:each="mt:${motelInfoDto.listMotelType}">
-                            <span class="badge rounded-pill bg-secondary" th:text="${mt}"></span>
-                        </th:block>
-                    </div>
-                    <div>
-                        hạn chế :
-                        <th:block th:each="lg:${motelInfoDto.limitGenders}">
-                            <span class="badge rounded-pill bg-secondary"><div th:text="${lg}"></div></span>
-                        </th:block>
-                    </div>
-                    <div>
-                        <span th:text="${motelInfoDto.content}"></span>
-                    </div>
-                    <div class="mt-5"><span class="fw-bold">Color</span>
-                        <div class="colors">
-                            <ul id="marker">
-                                <li id="marker-1"></li>
-                                <li id="marker-2"></li>
-                                <li id="marker-3"></li>
-                                <li id="marker-4"></li>
-                                <li id="marker-5"></li>
-                            </ul>
+                <div class="col-md-6 scroll-page">
+                    <div class="p-3 right-side">
+                        <div class="d-flex justify-content-between align-items-center"><h3> Thông Tin Chi Tiết</h3>    <span
+                                class="heart"><i class='bx bx-heart'></i></span></div>
+                        <div th:text="${' ★tối đa: '+motelDetailInfoForm.motelInfoDto.maxPeople+' người  ★pn: '+motelDetailInfoForm.motelInfoDto.countBedroom +' ★wc: '+motelDetailInfoForm.motelInfoDto.countWC +' ★diện tích: '+motelDetailInfoForm.motelInfoDto.area +' m²'}"></div>
+                        <div class="mt-2 pr-3 content"><p th:text="${motelDetailInfoForm.motelInfoDto.shortContent}"></p></div>
+                        <h3 th:text="'Giá: '+ ${motelDetailInfoForm.motelInfoDto.price}+' đồng'"></h3>
+                        <div class="ratings d-flex flex-row align-items-center">
+                            <div class="d-flex flex-row"><i class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i
+                                    class='bx bxs-star'></i> <i class='bx bxs-star'></i> <i class='bx bx-star'></i></div>
+                            <span>441 reviews</span></div>
+                        <br>
+                        <h5>Thông tin mô tả chi tiết: </h5>
+                        <div><span class="fas fa-comment-dollar"></span>
+                            Tiện ích:
+                            <th:block th:each="a:${motelDetailInfoForm.motelInfoDto.listAmenities}">
+                                <span class="badge rounded-pill bg-secondary" th:text="${a.name}"></span>
+                            </th:block>
                         </div>
+
+                        <div><span class="fas fa-comment-dollar"></span>
+                            Thể Loại:
+                            <th:block th:each="mt:${motelDetailInfoForm.motelInfoDto.listMotelType}">
+                                <span class="badge rounded-pill bg-secondary" th:text="${mt}"></span>
+                            </th:block>
+                        </div>
+                        <div>
+                            hạn chế :
+                            <th:block th:each="lg:${motelDetailInfoForm.motelInfoDto.limitGenders}">
+                                <span class="badge rounded-pill bg-secondary"><div th:text="${lg}"></div></span>
+                            </th:block>
+                        </div>
+                        <div>
+                            <span th:text="${motelDetailInfoForm.motelInfoDto.content}"></span>
+                        </div>
+                        <div class="mt-5"><span class="fw-bold"></span>
+                            <div class="colors">
+                                <ul id="marker">
+                                    <li id="marker-1" class="gradient-custom-2"></li>
+                                    <li id="marker-2" class="gradient-custom-2"></li>
+                                    <li id="marker-3" class="gradient-custom-2"></li>
+                                    <li id="marker-4" class="gradient-custom-2"></li>
+                                    <li id="marker-5" class="gradient-custom-2"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="buttons d-flex flex-row mt-5 gap-3">
+                            <button class="btn btn-outline-danger">Lưu để xem sau</button>
+                            <button class="btn btn-dark gradient-custom-2">Đặt cọc ngay</button>
+                        </div>
+
                     </div>
-                    <div class="buttons d-flex flex-row mt-5 gap-3">
-                        <button class="btn btn-outline-dark">Buy Now</button>
-                        <button class="btn btn-dark">Add to Basket</button>
-                    </div>
-                    <div class="search-option"><i class='bx bx-search-alt-2 first-search'></i>
-                        <div class="inputs"><input type="text" name=""></div>
-                        <i class='bx bx-share-alt share'></i></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="container mt-3">
+        <h2>Tác giả:</h2>
+        <br>
+        <div class="row">
+            <div class="col">
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body text-center">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                             class="rounded-circle img-fluid" style="width: 150px;">
+                        <h5 class="my-3" th:text="${motelDetailInfoForm.accountInfoDto.getName()}"></h5>
+                        <p class="text-muted mb-1">Hãy theo dõi và liên hệ với tôi</p>
+                        <div class="d-flex justify-content-center mb-2">
+                            <button type="button" class="btn btn-outline-danger">Theo dõi</button>
+                            <button type="button" class="btn btn-dark gradient-custom-2 ml-2">Liên hệ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4 mb-lg-0">
+                    <div class="card-body ">
+                        <table class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <td>Sdt:</td>
+                                <td th:text="${motelDetailInfoForm.accountInfoDto.getTel()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Email:</td>
+                                <td th:text="${motelDetailInfoForm.accountInfoDto.getEmail()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Họ và tên:</td>
+                                <td th:text="${motelDetailInfoForm.accountInfoDto.getName()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Quê quán:</td>
+                                <td th:text="${motelDetailInfoForm.accountInfoDto.getAddress()}"></td>
+                            </tr>
+                            <tr>
+                                <td>Tham gia vào ngày:</td>
+                                <td th:text="${motelDetailInfoForm.accountInfoDto.getTimeJoin()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+
+<script>
+    $(document).ready(function () {
+        $("#previos").click(function () {
+            $("#action").val("back");
+            $("form").prop("action","/seller/addMotel");
+            $("form").prop("method","get");
+            $("form").submit();
+        })
+        $("#save").click(function () {
+            $("form").prop("action","/seller/motelSave");
+            $("form").prop("method","post");
+            $("form").submit();
+        })
+        $("#cancel").click(function () {
+            $("form").prop("action","/seller/motelCancel");
+            $("form").prop("method","post");
+            $("form").submit();
+        })
+    });
+</script>
 </body>
+</html>
 </html>

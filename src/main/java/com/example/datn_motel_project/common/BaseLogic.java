@@ -54,4 +54,17 @@ public class BaseLogic {
         }
         return listPaging;
     }
+
+    public static String convertDateForDB(String date) throws ParseException {
+        final String OLD_FORMAT = "MM/dd/yyyy";
+        final String NEW_FORMAT = "yyyy-MM`-dd";
+        String oldDateString = date;
+        String newDateString;
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        Date d = sdf.parse(oldDateString);
+        sdf.applyPattern(NEW_FORMAT);
+        newDateString = sdf.format(d);
+        return newDateString;
+    }
 }

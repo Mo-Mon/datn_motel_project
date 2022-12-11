@@ -25,4 +25,12 @@ public interface AmenitiesRepository  extends JpaRepository<Amenities,Long> {
 
     @Query(value = "select * from amenities where delete_flag = 0 and id = ?1", nativeQuery = true)
     public Amenities findAllById(Long id);
+
+    @Query(value = "select a.id from motel as m \n" +
+            "inner join motel_amenities_detail as mad on ( m.id = mad.motel_id and m.delete_flag = 0 )\n" +
+            "inner join amenities as a on ( mad.amenties_id = a.id and a.delete_flag = 0 )\n" +
+            "where m.id = ?1 and a.type = ?2", nativeQuery = true)
+    public List<Long> findAmenitiesInOutIdByMotelId(Long motelId, String type);
+
+
 }

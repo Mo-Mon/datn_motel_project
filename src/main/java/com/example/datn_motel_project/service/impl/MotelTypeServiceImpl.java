@@ -27,4 +27,15 @@ public class MotelTypeServiceImpl implements MotelTypeService {
     public MotelType findMotelTypeById(Long id){
         return motelTypeRepository.findMotelTypeById(id);
     }
+
+    @Override
+    public List<MotelType> findMotelTypeByMotelId(Long motelId){
+        return motelTypeRepository.findMotelTypeByMotelId(motelId);
+    }
+
+    @Override
+    public List<Long> finMotelTypeIdByMotelId(Long motelId){
+        return motelTypeRepository.findMotelTypeIdByMotelId(motelId);
+    }
+
 }

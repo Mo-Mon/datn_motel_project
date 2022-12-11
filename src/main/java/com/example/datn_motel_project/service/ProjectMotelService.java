@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface ProjectMotelService {
     List<ProjectMotel> findAllProjectMotel();
+
+    Long findIdByMotelId(Long id);
+
+    ProjectMotel findByMotelId(Long id);
 }

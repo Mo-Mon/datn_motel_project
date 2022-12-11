@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,7 +23,7 @@ public class MotelInfoDto {
     private Integer count;
     private Integer countHired;
     private String status;
-    private Set<Image> listImage = new LinkedHashSet<>();
+    private List<Image> listImage = new ArrayList<>();
     private Set<String> limitGenders = new LinkedHashSet<>();
     private Set<String> listMotelType = new LinkedHashSet<>();
     private Set<Amenities> listAmenities = new LinkedHashSet<>();

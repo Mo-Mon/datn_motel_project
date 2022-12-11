@@ -2,11 +2,13 @@ package com.example.datn_motel_project.repository.impl;
 
 import com.example.datn_motel_project.Constant.listmotel.PriceRange;
 import com.example.datn_motel_project.common.BaseLogic;
+import com.example.datn_motel_project.entity.Motel;
 import com.example.datn_motel_project.entity.PageCustomer;
 import com.example.datn_motel_project.repository.MotelInfoRepository;
 import javafx.util.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +28,60 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
             " left join (motel_amenities_detail as mad inner join amenities as am on (mad.amenties_id = am.id and am.delete_flag = 0)) on (mad.motel_id = m.id ) " +
             " left join (motel_type_detail as mtd inner join motel_type as mt on (mtd.type_id = mt.id and mt.delete_flag = 0)) on (mtd.motel_id = m.id ) " +
             " where 1 = 1 and a.delete_flag = 0 ";
+
+    private String queryMotelAdmin = " from motel wherw 1 = 1 ";
+
+    @Override
+    public Integer getTotalMotelAdmin(String title, String location, String project, String nameUserPort){
+        String query = "select count(*) " + queryMotelManager;
+        List<Object> listParam = new ArrayList<>();
+        if(!BaseLogic.checkEmptyString(title)){
+            query += " and title like ?";
+            listParam.add("%"+title+"%");
+        }
+        if(!BaseLogic.checkEmptyString(location)){
+            query += " and title = ?";
+            listParam.add(location);
+        }
+        if(!BaseLogic.checkEmptyString(project)){
+            query += " and project like ?";
+            listParam.add("%"+project+"%");
+        }
+        if(!BaseLogic.checkEmptyString(nameUserPort)){
+            query += " and create_by like ?";
+            listParam.add("%"+nameUserPort+"%");
+        }
+        return jdbcTemplate.query(query,listParam.toArray(),(rs, rowNum) ->
+                rs.getInt("count")
+        ).get(0);
+    }
+
+    @Override
+    public List<Motel> getListMotelAdmin(String title, String location, String project, String nameUserPort, Integer offset, Integer maxResults){
+        String query = "select * " + queryMotelManager;
+        List<Object> listParam = new ArrayList<>();
+        if(!BaseLogic.checkEmptyString(title)){
+            query += " and title like ?";
+            listParam.add("%"+title+"%");
+        }
+        if(!BaseLogic.checkEmptyString(location)){
+            query += " and title = ?";
+            listParam.add(location);
+        }
+        if(!BaseLogic.checkEmptyString(project)){
+            query += " and project like ?";
+            listParam.add("%"+project+"%");
+        }
+        if(!BaseLogic.checkEmptyString(nameUserPort)){
+            query += " and create_by like ?";
+            listParam.add("%"+nameUserPort+"%");
+        }
+        query += " limit ? offset ? ";
+        listParam.add(maxResults);
+        listParam.add(offset);
+        return jdbcTemplate.query(query,listParam.toArray(),new BeanPropertyRowMapper<Motel>()
+        );
+    }
 
     public Integer getTotalManagerRecord(String timePay, String inputTitle, String  inputProject, String location, List<PriceRange> listPriceRange, List<String> listMotelType, List<String> listAmenities , Integer size, Pair<String,String> timePort,List<Integer> listStatus,List<Long> listId, Boolean flag,Long accountId){
         String query = "select count(distinct m.id) as count " +queryMotelManager;
@@ -133,7 +189,7 @@ public class MotelInfoRepositoryImpl implements MotelInfoRepository {
             query += " ) ";
         }
         if(timePort != null && !BaseLogic.checkEmptyString(timePort.getKey()) && !BaseLogic.checkEmptyString(timePort.getValue())){
-            query += " m.create_at between '"+timePort.getKey()+"'" +
+            query += " and m.create_at between '"+timePort.getKey()+"'" +
                     "and" +
                     "    DATE_ADD('"+timePort.getValue()+"',INTERVAL 1 DAY)";
         }

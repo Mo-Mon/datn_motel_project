@@ -17,4 +17,14 @@ public class ProjectMotelServiceImpl implements ProjectMotelService {
     public List<ProjectMotel> findAllProjectMotel(){
         return projectMotelRepository.findAllProjectMotel();
     }
+
+    @Override
+    public Long findIdByMotelId(Long id){
+        return projectMotelRepository.findIdByMotelId(id);
+    }
+
+    @Override
+    public ProjectMotel findByMotelId(Long id){
+        return projectMotelRepository.findByMotelId(id);
+    }
 }

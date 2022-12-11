@@ -21,7 +21,7 @@
   <meta name="keywords" content="Colrolib Templates">
 
   <!-- Title Page-->
-  <title>Au Form Wizard</title>
+  <title>Trọ uy tín</title>
 
   <!-- Icons font CSS-->
   <link th:href="@{/vendor/mdi-font/css/material-design-iconic-font.min.css}" rel="stylesheet" media="all">
@@ -38,8 +38,8 @@
 </head>
 <body>
 <div th:insert="header.html"></div>
-<form th:object="${listMotelManagerForm}">
-  <input id="action" name="action" value="" hidden/>
+<form id="form" th:object="${listMotelManagerForm}">
+  <input class="action" name="action" value="" hidden/>
   <div id="content">
     <div class="container my-sm-5 border p-0 bg-sec-light">
       <div >
@@ -48,45 +48,84 @@
             <div>
               <ul class="tab-list">
                 <li class="tab-list__item active">
-                  <a class="tab-list__link" href="#tab1" data-toggle="tab">hotels</a>
+                  <a class="tab-list__link" href="#tab1" data-toggle="tab">Danh sách</a>
                 </li>
                 <li class="tab-list__item">
-                  <a class="tab-list__link" href="#tab2" data-toggle="tab">car</a>
+                  <a class="tab-list__link" href="#tab2" data-toggle="tab">Thông tin</a>
                 </li>
                 <li class="tab-list__item">
-                  <a class="tab-list__link" href="#tab3" data-toggle="tab">flight</a>
+                  <a class="tab-list__link" href="#tab3" data-toggle="tab">Tình toán</a>
                 </li>
               </ul>
               <div class="tab-content">
                 <div class="tab-pane active" id="tab1">
-                    <button class="btn-submit" type="submit"><a href="/seller/addMotel">+ Thêm Mới</a></button>
-                    <br>
-                    <div class="input-group">
-                      <label class="label">Going to</label>
-                      <input class="input--style-1" type="text" name="address" placeholder="Destination, hotel name" required="required">
-                      <i class="zmdi zmdi-pin input-group-symbol"></i>
+                  <div class="row mb-4">
+                    <div class="col-sm-6">
+                      <a class="col-sm-6 btn gradient-custom-2" href="/seller/addMotel">+ Thêm Mới</a>
                     </div>
+                     </div>
+                    <br>
+                  <div class="input-group">
+                    <label class="label">Tiêu đề</label>
+                    <input type="text" placeholder="mời nhập" th:field="*{inputTitle}"/>
+                    <i class="zmdi zmdi-pin input-group-symbol"></i>
+                  </div>
+                  <div class="row row-space">
+                    <div class="col-2">
+                      <div class="input-group">
+                        <label class="label">Vị trí </label>
+                        <select th:field="*{location}" name="location"
+                                class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select"
+                                style="width: 320px">
+                          <option value="">---- Vị trí ----</option>
+                          <div th:each="item:${listLocation}">
+                            <option th:value="${item}" th:text="${item}"></option>
+                          </div>
+                        </select>
+                        <i class="zmdi zmdi-pin input-group-symbol"></i>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="input-group">
+                        <label class="label">trả</label>
+                        <select th:field="*{timePay}" name="timePay"
+                                class=" mx-md-2 mx-sm-1 mx-3 my-sm-0 my-2 form-control  form-select" id="sel1"
+                                style="width: 320px">
+                          <option value="">--tất cả---</option>
+                          <div th:each="item:${listTimePay}">
+                            <option th:value="${item}" th:text="${item}"></option>
+                          </div>
+                        </select>
+                        <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="input-group">
+                    <label class="label">Dự án</label>
+                    <input type="text" placeholder="mời nhập" th:field="*{inputProject}"/>
+                    <i class="zmdi zmdi-pin input-group-symbol"></i>
+                  </div>
                     <div class="row row-space">
                       <div class="col-2">
                         <div class="input-group">
-                          <label class="label">check-in</label>
-                          <input class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start">
+                          <label class="label">ngày bắt đầu</label>
+                          <input th:field="*{startDate}" class="input--style-1" type="text" name="check-in" placeholder="mm/dd/yyyy" id="input-start">
                           <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
                         </div>
                       </div>
                       <div class="col-2">
                         <div class="input-group">
-                          <label class="label">check-out</label>
-                          <input class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end">
+                          <label class="label">ngày kết thúc</label>
+                          <input th:field="*{endDate}" class="input--style-1" type="text" name="check-out" placeholder="mm/dd/yyyy" id="input-end">
                           <i class="zmdi zmdi-calendar-alt input-group-symbol"></i>
                         </div>
                       </div>
                     </div>
                     <div class="input-group">
-                      <label class="label">travellers</label>
+                      <label class="label">mã nhà trọ</label>
                       <i class="zmdi zmdi-account-add input-group-symbol"></i>
                       <div class="input-group-icon" id="js-select-special">
-                        <input class="input--style-1" type="text" name="traveller" value="1 Adult, 0 Children, 1 Room" disabled="disabled" id="info">
+                        <input class="input--style-1" type="text" name="traveller" value="" disabled="disabled" id="info">
                         <i class="zmdi zmdi-chevron-down input-icon"></i>
                       </div>
                       <div class="dropdown-select">
@@ -102,40 +141,38 @@
                                   <span class="plus">+</span>
                                 </div>
                               </li>
-                              <li class="list-person__item">
-                                <span class="name">Children</span>
-                                <div class="quantity quantity2">
-                                  <span class="minus">-</span>
-                                  <input class="inputQty" type="number" min="0" value="0">
-                                  <span class="plus">+</span>
-                                </div>
-                              </li>
                             </ul>
                           </li>
                         </ul>
                         <div class="list-room__footer">
-                          <a href="#" id="btn-add-room">Add room</a>
+<!--                          <a href="#" id="btn-add-room">Add room</a>-->
+                          <a href=""> Thêm mã</a>
                         </div>
                       </div>
                     </div>
-                    <div class="checkbox-row">
-                      <label class="checkbox-container m-r-45">Add a flight
-                        <input type="checkbox" checked="checked" name="add-flight">
-                        <span class="checkmark"></span>
-                      </label>
-                      <label class="checkbox-container">Add a car
-                        <input type="checkbox" name="add-car">
-                        <span class="checkmark"></span>
-                      </label>
+                    <div class="checkbox-row mb-4">
+                      <div class="form-check-inline  mb-4">
+                        <th:block th:each="item:${listStatus}">
+                          <input class="form-check-input me-2" type="checkbox" th:value="${item.id}" th:field="*{listStatus}"/>
+                          <label class="form-check-label" style="margin-right: 8px;" th:text="${item.name}">  </label>
+                        </th:block>
+                      </div>
                     </div>
-                    <button id="btnSearch" class="btn-submit" type="submit">Tìm kiếm</button>
-                    <button class="btn-submit" type="submit">Xóa Tất Cả</button>
-                    <button class="btn-submit" type="submit">Chạy QC tất cả</button>
+                  <br>
+                  <div class="row mb-4">
+                    <button id="btnSearch" class=" form-outline col-sm-3 btn gradient-custom-2" type="submit">Tìm kiếm</button>
+                  </div>
+
+                  <div class="row mb-4">
+                    <button class=" col-sm-3 btn gradient-custom-2" type="submit">Xóa Tất Cả</button>
+                    <button class=" col-sm-3 btn gradient-custom-2 marginleft" type="submit">Chạy QC tất cả</button>
+                  </div>
+
                 </div>
                 <div class="tab-pane" id="tab2">
                     <div class="input-group">
                       <label class="label">location:</label>
-                      <input class="input--style-1" type="text" name="location" placeholder="Destination, hotel name" required="required">
+                      <input class="input--style-1" type="text"  placeholder="Destination, hotel name" required="required">
                       <i class="zmdi zmdi-pin input-group-symbol"></i>
                     </div>
                     <div class="row row-space">
@@ -362,6 +399,12 @@
                         aria-controls="room-facilities-1"><span class="fas fa-plus"></span></button>
               </div>
               <div id="room-facilities-1" class="collapse show">
+                <div class="my-1"><label>
+                  <input class="form-check-input" type="radio" name="radioSize"
+                         th:field="*{size}" value=""/>
+                  <label class="form-check-label"
+                         >Tất cả</label>
+                  <span class="check"></span> </label></div>
                 <div th:each="item:${listSize}">
                   <div class="my-1"><label>
                     <input class="form-check-input" type="radio" name="radioSize"
@@ -401,9 +444,16 @@
               <tr>
                 <td colspan="6">
                   <div class="row">
-                    <div class="col-lg-3"><img
-                            src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
-                            alt="" class="hotel-img"></div>
+                    <th:block th:if="${item.listImage != null && item.listImage.size() > 0}">
+                      <div class="col-lg-3"><img
+                              th:src="@{'/imagePublic/'+${item.listImage.get(0).path}}"
+                              alt="" class="hotel-img"></div>
+                    </th:block>
+                    <th:block th:unless="${item.listImage != null && item.listImage.size() > 0}">
+                      <div class="col-lg-3"><img
+                              src="https://images.unsplash.com/photo-1580835845971-a393b73bf370?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=967&q=80"
+                              alt="" class="hotel-img"></div>
+                    </th:block>
                     <div class="col-lg-9">
                       <div class="d-md-flex align-items-md-center">
                         <div class="name">
@@ -451,10 +501,10 @@
                     </div>
                   </div>
                   <div class="d-flex justify-content-end mt-1">
-                    <div class="btn btn-outline-danger marginleft">Xem chi tiết</div>
-                    <div class="btn btn-outline-danger marginleft">Chỉnh sửa</div>
-                    <div class="btn btn-outline-danger marginleft">Xóa</div>
-                    <div class="btn btn-outline-danger marginleft">Đăng ký QC</div>
+                    <a class="btn btn-outline-danger marginleft" th:href="'/motelDetailInfo/'+${item.id}">Xem chi tiết</a>
+                    <a class="btn btn-outline-danger marginleft" th:href="'/seller/editMotel/'+${item.id}">Chỉnh sửa</a>
+                    <div class="btn btn-outline-danger marginleft deleteButton" data-bs-toggle="modal" th:value="${item.id}">Xóa</div>
+                    <div class="btn btn-outline-danger marginleft runQCButton" th:value="${item.id}">Đăng ký QC</div>
                   </div>
                 </td>
               </tr>
@@ -466,7 +516,7 @@
       </div>
       <div>
         <br>
-        <input id="pageCurrent" th:field="*{pageCurrent}" hidden/>
+<!--        <input th:field="*{pageCurrent}" hidden/>-->
         <nav aria-label="Page navigation example">
           <ul class="pagination justify-content-center">
             <div th:if="${listPage.get(0) > 1}">
@@ -495,7 +545,64 @@
     </div>
   </div>
 </form>
+<form id="oldForm" th:object="${listMotelManagerForm}">
+  <input class="action" name="action" value="" hidden/>
+  <input id="pageCurrent" th:field="*{pageCurrent}" hidden/>
+  <input th:field="*{inputTitle}" hidden/>
+  <input th:field="*{inputProject}" hidden/>
+  <input th:field="*{location}" hidden/>
+  <input th:field="*{timePay}" hidden/>
+  <input th:field="*{startDate}" hidden/>
+  <input th:field="*{endDate}" hidden/>
+  <input th:field="*{listPriceRange}" hidden/>
+  <input th:field="*{listMotelType}" hidden/>
+  <input th:field="*{listAmenitiesIn}" hidden/>
+  <input th:field="*{listAmenitiesOut}" hidden/>
+  <input th:field="*{listStatus}" hidden/>
+  <input th:field="*{listId}" hidden/>
+  <input th:field="*{size}" hidden/>
+  <input id="id" name="id" value="1"/>
+</form>
 
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Xóa sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span>
+          Bạn có chắc chắn xóa đi sản phẩm này không
+        </span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary text-uppercase gradient-custom-2 marginleft btnDeleteNow">Xóa ngay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="runQCModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Chạy quảng cáo sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span>
+          Bạn có chắc chắn chạy quảng cáo sản phẩm này không
+        </span>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary text-uppercase gradient-custom-2 marginleft btnRunQCNow">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Jquery JS-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
 <!-- Vendor JS-->

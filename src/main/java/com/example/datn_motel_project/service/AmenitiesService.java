@@ -8,4 +8,8 @@ public interface AmenitiesService {
     Amenities findById(Long id);
 
     List<Amenities> findAmenities(String type, Long accountId);
+
+    List<Long> findAmenitiesInIdByMotelId(Long motelId);
+
+    List<Long> findAmenitiesOutIdByMotelId(Long motelId);
 }

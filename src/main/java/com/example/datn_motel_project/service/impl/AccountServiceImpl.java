@@ -1,5 +1,6 @@
 package com.example.datn_motel_project.service.impl;
 
+import com.example.datn_motel_project.dto.AccountInfoDto;
 import com.example.datn_motel_project.entity.Account;
 import com.example.datn_motel_project.entity.Role;
 import com.example.datn_motel_project.repository.AccountRepository;
@@ -44,5 +45,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<Account> findById(Long id) {
         return accountRepository.findById(id);
+    }
+
+    @Override
+    public AccountInfoDto getAccountInfo(Long id){
+        return accountRepository.getAccountInfo(id);
     }
 }

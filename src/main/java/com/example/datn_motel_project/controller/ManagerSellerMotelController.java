@@ -17,13 +17,15 @@ import com.example.datn_motel_project.service.TimePayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import javafx.util.Pair;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -42,7 +44,7 @@ public class ManagerSellerMotelController {
     private MotelService motelService;
 
     @GetMapping("/managerMotel")
-    public String init(Model model, HttpSession session){
+    public String init(Model model, HttpSession session) throws ParseException {
         ListMotelManagerForm listMotelManagerForm = new ListMotelManagerForm();
 //        listMotelManagerForm.setTimePay(timePayService.getListStringTimePay().get(0));
         model.addAttribute("listMotelManagerForm", listMotelManagerForm);
@@ -52,8 +54,43 @@ public class ManagerSellerMotelController {
         getListRecordPage(accountId,model,listMotelManagerForm);
         return "managermotel";
     }
+    @GetMapping(value="/managerMotel/replay" )
+    public String replay( Model model, HttpSession session) throws ParseException {
+        ListMotelManagerForm listMotelManagerForm = (ListMotelManagerForm) model.getAttribute("form");
+        if(model != null){
+            model.addAttribute("listMotelManagerForm",listMotelManagerForm);
+        }else{
+            listMotelManagerForm = new ListMotelManagerForm();
+            model.addAttribute("listMotelManagerForm", listMotelManagerForm);
+        }
+        setupView(model);
+        getData(model);
+        Long accountId = (Long) session.getAttribute("accountId");
+        getListRecordPage(accountId,model,listMotelManagerForm);
+        return "managermotel";
+    }
+
+    @PostMapping(value = "/motelDelete")
+    public String deleteMotel(@RequestParam("id") String id, @ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm
+            , RedirectAttributes redirectAttributes, HttpSession session){
+        Long accountId = (Long) session.getAttribute("accountId");
+        motelService.deleteMotelId(id,accountId);
+        redirectAttributes.addFlashAttribute("form",listMotelManagerForm);
+        return "redirect:/seller/managerMotel/replay";
+    }
+
+    @PostMapping(value = "/motelRunQC")
+    public String qcMotel(@RequestParam("id") String id, @ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm
+            , RedirectAttributes redirectAttributes, HttpSession session){
+        Long accountId = (Long) session.getAttribute("accountId");
+        motelService.runQCMotelId(id,accountId);
+        redirectAttributes.addFlashAttribute("form",listMotelManagerForm);
+        return "redirect:/seller/managerMotel/replay";
+    }
+
     @GetMapping(value = "/managerMotel", params = { "action=search" })
-    public String search(@ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm, Model model, HttpSession session) {
+    public String search(@ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm, Model model, HttpSession session) throws ParseException {
+        listMotelManagerForm.setPageCurrent(Base.PAGE_DEFAULT);
         model.addAttribute("listMotelManagerForm", listMotelManagerForm);
         setupView(model);
         getData(model);
@@ -62,7 +99,7 @@ public class ManagerSellerMotelController {
         return "managermotel";
     }
     @GetMapping(value = "/managerMotel", params = { "action=paging" })
-    public String getPage(@ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm, Model model, HttpSession session) {
+    public String getPage(@ModelAttribute("listMotelManagerForm") ListMotelManagerForm listMotelManagerForm, Model model, HttpSession session) throws ParseException {
         model.addAttribute("listMotelManagerForm", listMotelManagerForm);
         setupView(model);
         getData(model);
@@ -87,14 +124,16 @@ public class ManagerSellerMotelController {
         model.addAttribute("listTimePay",timePays);
     }
 
-    private void getListRecordPage(Long accountId,Model model, ListMotelManagerForm listMotelManagerForm) {
+    private void getListRecordPage(Long accountId,Model model, ListMotelManagerForm listMotelManagerForm) throws ParseException {
         List<PriceRange> priceRanges = PriceRange.getListPriceRangeById(listMotelManagerForm.getListPriceRange());
         List<String> listAmenities = new ArrayList<>();
         listAmenities.addAll(listMotelManagerForm.getListAmenitiesIn());
         listAmenities.addAll(listMotelManagerForm.getListAmenitiesOut());
         Pair<String, String> timePort = null;
-        if(BaseLogic.checkEmptyString(listMotelManagerForm.getStartDate()) && BaseLogic.checkEmptyString(listMotelManagerForm.getEndDate())){
-            timePort = new Pair<>(listMotelManagerForm.getStartDate(),listMotelManagerForm.getEndDate());
+        if(!BaseLogic.checkEmptyString(listMotelManagerForm.getStartDate()) && !BaseLogic.checkEmptyString(listMotelManagerForm.getEndDate())){
+            String dateStart = BaseLogic.convertDateForDB(listMotelManagerForm.getStartDate());
+            String dateEnd = BaseLogic.convertDateForDB(listMotelManagerForm.getEndDate());
+            timePort = new Pair<>(dateStart,dateEnd);
         }
         PageCustomer<MotelInfoDto> pageCustomer =  motelService.findListMotelManagerAccount(
                 listMotelManagerForm.getTimePay(),
@@ -116,4 +155,5 @@ public class ManagerSellerMotelController {
         List<Integer> listPage = BaseLogic.getListPaging(pageCustomer.getTotalPage(),listMotelManagerForm.getPageCurrent());
         model.addAttribute("listPage", listPage);
     }
+
 }

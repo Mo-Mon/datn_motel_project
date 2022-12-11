@@ -24,4 +24,9 @@ public class GenderServiceImpl implements GenderService {
         return genderRepository.findAllGenderById(id);
     }
 
+    @Override
+    public List<Long> getListIdByMotelId(Long id){
+        return genderRepository.findAllIdGenderByMotelId(id);
+    }
+
 }

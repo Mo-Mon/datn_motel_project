@@ -10,4 +10,8 @@ public interface MotelTypeService {
     List<MotelType> findAllMotelType();
 
     MotelType findMotelTypeById(Long id);
+
+    List<MotelType> findMotelTypeByMotelId(Long motelId);
+
+    List<Long> finMotelTypeIdByMotelId(Long motelId);
 }

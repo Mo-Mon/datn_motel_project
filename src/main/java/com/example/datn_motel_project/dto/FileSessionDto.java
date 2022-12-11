@@ -13,7 +13,7 @@ public class FileSessionDto {
 
     public Boolean isEmpty(){
         Boolean flag = false;
-        if(data != null || data.length == 0){
+        if(data == null || data.length == 0){
             flag = true;
         }
         return flag;

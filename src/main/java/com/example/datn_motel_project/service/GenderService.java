@@ -8,4 +8,6 @@ public interface GenderService {
     List<Gender> findAll();
 
     Gender findById(Long id);
+
+    List<Long> getListIdByMotelId(Long id);
 }

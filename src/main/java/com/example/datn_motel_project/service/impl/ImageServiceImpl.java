@@ -1,5 +1,7 @@
 package com.example.datn_motel_project.service.impl;
 
+import com.example.datn_motel_project.common.BaseLogic;
+import com.example.datn_motel_project.dto.FileSessionDto;
 import com.example.datn_motel_project.entity.Account;
 import com.example.datn_motel_project.entity.Image;
 import com.example.datn_motel_project.repository.ImageRepository;
@@ -15,6 +17,7 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -31,6 +34,7 @@ import java.util.stream.Stream;
 public class ImageServiceImpl implements ImageService {
     @Autowired
     private ImageRepository imageRepository;
+
     private final Path storageFolder = Paths.get("DataImagePublic");
     public ImageServiceImpl() {
         try {
@@ -43,6 +47,41 @@ public class ImageServiceImpl implements ImageService {
         String fileExtension = FilenameUtils.getExtension(file.getOriginalFilename());
         return Arrays.asList(new String[] {"png","jpg","jpeg", "bmp"})
                 .contains(fileExtension.trim().toLowerCase());
+    }
+    @Override
+    public Image storeFileInSession(FileSessionDto fileSessionDto, Account account){
+        try {
+            System.out.println("bắt đầu lấy ảnh");
+            if (fileSessionDto.isEmpty()) {
+                throw new RuntimeException("file gửi lên bị trống");
+            }
+            float fileSizeInMegabytes = fileSessionDto.getSize() / 1_000_000.0f;
+            if(fileSizeInMegabytes > 5.0f) {
+                throw new RuntimeException("File phải có dung lượng <= 5Mb");
+            }
+            String fileExtension = FilenameUtils.getExtension(fileSessionDto.getFileName());
+            String generatedFileName = UUID.randomUUID().toString().replace("-", "");
+            generatedFileName = generatedFileName+"."+fileExtension;
+            Path destinationFilePath = this.storageFolder.resolve(
+                    Paths.get(generatedFileName))
+                    .normalize().toAbsolutePath();
+            if (!destinationFilePath.getParent().equals(this.storageFolder.toAbsolutePath())) {
+                throw new RuntimeException(
+                        "không thể lưu trử ngoài thư mục hiện tại");
+            }
+            InputStream input = new ByteArrayInputStream(fileSessionDto.getData());
+            try (InputStream inputStream = input) {
+                Files.copy(inputStream, destinationFilePath, StandardCopyOption.REPLACE_EXISTING);
+            }
+            Image image = new Image();
+            BaseLogic.setInfoAccountCreate(account,image);
+            image.setPath(generatedFileName);
+            imageRepository.save(image);
+            return image;
+        }
+        catch (IOException exception) {
+            throw new RuntimeException("đã có lỗi xảy ra khi lưu file", exception);
+        }
     }
     @Override
     public Image storeFile(MultipartFile file, Account account) {

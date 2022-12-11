@@ -5,4 +5,6 @@ public interface AccountInfoDto {
     String getName();
     String getTel();
     String getEmail();
+    String getTimeJoin();
+    String getAddress();
 }

@@ -34,4 +34,14 @@ public class AmenitiesServiceImpl implements AmenitiesService {
             }
         }
     }
+
+    @Override
+    public List<Long> findAmenitiesInIdByMotelId(Long motelId){
+        return amenitiesRepository.findAmenitiesInOutIdByMotelId(motelId,"0");
+    }
+
+    @Override
+    public List<Long> findAmenitiesOutIdByMotelId(Long motelId){
+        return amenitiesRepository.findAmenitiesInOutIdByMotelId(motelId,"1");
+    }
 }

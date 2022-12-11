@@ -1,15 +1,34 @@
 $(document).ready(function(){
     $("#btnSearch").click(function(){
-        $("#action").val("search");
-        $("form").prop("action","/seller/managerMotel");
-        $("form").prop("method","get");
-        $("form").submit();
+        $(".action").val("search");
+        $("#form").prop("action","/seller/managerMotel");
+        $("#form").prop("method","get");
+        $("#form").submit();
     });
     $(".btn-paging-click").click(function (){
         $("#pageCurrent").val($(this).val());
-        $("#action").val("paging");
-        $("form").prop("action","/seller/managerMotel");
-        $("form").prop("method","get");
-        $("form").submit();
+        $(".action").val("paging");
+        $("#oldForm").prop("action","/seller/managerMotel");
+        $("#oldForm").prop("method","get");
+        $("#oldForm").submit();
     })
+    $(".deleteButton").click(function(){
+        $("#id").val($(this).attr('value'))
+        $('#deleteModal').modal('show');
+    });
+    $(".btnDeleteNow").click(function(){
+        $("#oldForm").prop("action","/seller/motelDelete");
+        $("#oldForm").prop("method","post");
+        $("#oldForm").submit();
+    });
+
+    $(".runQCButton").click(function(){
+        $("#id").val($(this).attr('value'))
+        $('#runQCModal').modal('show');
+    });
+    $(".btnRunQCNow").click(function(){
+        $("#oldForm").prop("action","/seller/motelRunQC");
+        $("#oldForm").prop("method","post");
+        $("#oldForm").submit();
+    });
 });

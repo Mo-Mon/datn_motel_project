@@ -26,18 +26,18 @@ public class Motel extends BaseEntity {
     private int count;
     private int countHired;
     private Integer status;
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_limit_gender",
             joinColumns = @JoinColumn(name = "motel_id"),
             inverseJoinColumns = @JoinColumn(name = "gender_id")
     )
-    private Set<Gender> limitGenders;
+    private Set<Gender> limitGenders = new LinkedHashSet<>();
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
 
-    @OneToMany(mappedBy = "motel")
+    @OneToMany(mappedBy = "motel",cascade = CascadeType.ALL)
     private Set<MotelTransaction> motelTransactions;
 
     @ManyToOne
@@ -48,10 +48,10 @@ public class Motel extends BaseEntity {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    @OneToMany(mappedBy = "motel")
+    @OneToMany(mappedBy = "motel",cascade = CascadeType.ALL)
     private Set<MotelPayInfoDetail> motelPayInfoDetails = new LinkedHashSet<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_type_detail",
             joinColumns = @JoinColumn(name = "motel_id"),
             inverseJoinColumns = @JoinColumn(name = "type_id")
@@ -61,10 +61,10 @@ public class Motel extends BaseEntity {
     @OneToMany(mappedBy = "motel")
     private Set<Image> images = new LinkedHashSet<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(name = "motel_amenities_detail",
             joinColumns = @JoinColumn(name = "motel_id"),
             inverseJoinColumns = @JoinColumn(name = "amenties_id")
     )
-    private Set<Amenities> amenities;
+    private Set<Amenities> amenities = new LinkedHashSet<>();
 }

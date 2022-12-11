@@ -15,6 +15,11 @@ public class LocationServiceImpl implements LocationService {
     private LocationRepository locationRepository;
 
     @Override
+    public Long getIdLocationByMotelId(Long id){
+        return locationRepository.findLocationIdByMotelId(id);
+    }
+
+    @Override
     public List<String> getListLocation(){
         List<String> listLocation = new ArrayList<>();
         for(Location location : locationRepository.findAll()){
